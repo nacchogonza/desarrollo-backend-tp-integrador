@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 import api.cliente.endpoint
-import api.deposito.endpoint
+""" import api.deposito.endpoint """
 
 app = FastAPI()
 
