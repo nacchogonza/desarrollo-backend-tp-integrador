@@ -1,8 +1,8 @@
-"""agregado de tablas de location
+"""reestructuracion de carpetas
 
-Revision ID: ab7b8da0ad4c
+Revision ID: 55e9b05d708e
 Revises: 
-Create Date: 2025-05-24 18:29:39.492095
+Create Date: 2025-05-30 00:02:56.548813
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'ab7b8da0ad4c'
+revision: str = '55e9b05d708e'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
