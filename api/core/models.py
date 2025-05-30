@@ -14,8 +14,6 @@ class Cliente(Base):
     id_ciudad = Column(Integer, ForeignKey("ciudad.id"))
     
     ciudad = relationship("Ciudad", back_populates="cliente", uselist=False)
-    # condicion_entrega = Column(Date, primary_key=False, nullable=False) --> Revisar si esto va en Cliente
-    
     
 class Ciudad(Base):
     __tablename__ = "ciudad"
@@ -31,7 +29,6 @@ class Provincia(Base):
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, primary_key=False, nullable=False)
     id_pais = Column(Integer, ForeignKey("pais.id"))
-    
     
     ciudad = relationship("Ciudad", back_populates="provincia", uselist=False)
     pais = relationship("Pais", back_populates="provincia", uselist=False)
