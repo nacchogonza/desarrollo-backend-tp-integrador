@@ -37,6 +37,5 @@ class Pais(Base):
     __tablename__ = "pais"
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, primary_key=False, nullable=False)
-    
 
     provincia = relationship("Provincia", back_populates="pais", uselist=False)
