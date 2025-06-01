@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from api.core import dal, database
-from api.core.schemas import PaisResponse, PaisCreateRequest, ProvinciaResponse, ProvinciaCreateRequest, CiudadResponse, CiudadCreateRequest
+from api.core.schemas import PaisResponse, PaisCreateRequest, ProvinciaResponse, ProvinciaCreateRequest, CiudadResponse, CiudadCreateRequest, ProveedorResponse, ProductoResponse, DespositResponse, SucursalResponse 
 
 router = APIRouter()
 
@@ -33,3 +33,4 @@ async def listar(db: AsyncSession = Depends(get_db)):
 @router.post("/pais/", response_model = PaisResponse)
 async def crear_pais(pais: PaisCreateRequest, db: AsyncSession = Depends(get_db)):
     return await dal.crear_pais(db, pais)
+
