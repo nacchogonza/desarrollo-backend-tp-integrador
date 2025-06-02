@@ -6,8 +6,9 @@ from api.core.schemas import (
     CiudadCreateRequest,
     ProvinciaCreateRequest,
     PaisCreateRequest,
+    StockCreateRequest
 )
-from api.core.models import Cliente, Ciudad, Provincia, Pais
+from api.core.models import Cliente, Ciudad, Provincia, Pais, Stock
 
 
 # CLIENTE
@@ -98,3 +99,33 @@ async def crear_pais(db: AsyncSession, pais: PaisCreateRequest):
     await db.commit()
     await db.refresh(nuevo_pais)
     return nuevo_pais
+
+
+# STOCK
+async def obtener_stocks(db: AsyncSession):
+    result = await db.execute(
+        select(Stock).options(
+            selectinload(Stock.producto)
+            .selectinload(Stock.deposito)
+            .selectinload(Stock.sucursal)
+        )
+    )
+    return result.scalars().all()
+
+
+async def crear_stock(db: AsyncSession, stock: StockCreateRequest):
+    nuevo_stock = Stock(**stock.dict())
+    db.add(nuevo_stock)
+    await db.commit()
+    await db.refresh(nuevo_stock)
+    result = await db.execute(
+        select(Stock)
+        .options(
+            selectinload(Stock.producto)
+            .selectinload(Stock.deposito)
+            .selectinload(Stock.sucursal)
+        )
+        .where(Stock.id == nuevo_stock.id)
+    )
+    stock_con_relacion = result.scalar_one()
+    return stock_con_relacion
