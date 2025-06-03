@@ -18,6 +18,20 @@ class ProvinciaCreateRequest(BaseModel):
 class CiudadCreateRequest(BaseModel):
     nombre: str
     id_provincia: int
+
+class SucursalCreateRequest(BaseModel):
+    nombre: str
+    telefono: str
+    email: str
+    direccion: str
+    id_ciudad: int
+
+class DepositoCreateRequest(BaseModel):
+    nombre: str
+    telefono: int
+    email: str
+    direccion: str
+    id_ciudad: int
     
 # RESPONSE
 class PaisResponse(BaseModel):
@@ -50,6 +64,28 @@ class ClienteResponse(BaseModel):
     direccion: str
     ciudad: CiudadResponse
     
+    class Config:
+        orm_mode = True
+
+class SucursalResponse(BaseModel):
+    id: int
+    nombre: str
+    telefono: str
+    email: str
+    direccion: str
+    ciudad: CiudadResponse
+
+    class Config:
+        orm_mode = True
+
+class DepositoResponse(BaseModel):
+    id: int
+    nombre: str
+    telefono: str
+    email: str
+    direccion: str
+    ciudad: CiudadResponse
+
     class Config:
         orm_mode = True
     
