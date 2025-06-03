@@ -119,3 +119,16 @@ class Proveedor(Base):
 
     remitoCompra = relationship("RemitoCompra", back_populates="proveedor", uselist=False)
     ciudad = relationship("Ciudad", back_populates="proveedor", uselist=False)
+
+class Stock(Base):
+    __tablename__ = "stock"
+    id = Column(Integer, primary_key=True, index=True)
+    cantidad_sucursal = Column(Integer, primary_key=False, index=False)
+    cantidad_deposito = Column(Integer, primary_key=False, index=False)
+    id_deposito = Column(Integer, ForeignKey("deposito.id"))
+    id_sucursal = Column(Integer, ForeignKey("sucursal.id"))
+    id_producto = Column(Integer, ForeignKey("producto.id"))
+    
+    deposito = relationship("Deposito", back_populates="stock", uselist=False)
+    sucursal = relationship("Sucursal", back_populates="stock", uselist=False)
+    producto = relationship("Producto", back_populates="stock", uselist=False)
