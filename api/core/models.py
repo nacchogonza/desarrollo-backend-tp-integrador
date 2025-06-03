@@ -132,3 +132,25 @@ class Stock(Base):
     deposito = relationship("Deposito", back_populates="stock", uselist=False)
     sucursal = relationship("Sucursal", back_populates="stock", uselist=False)
     producto = relationship("Producto", back_populates="stock", uselist=False)
+
+class Sucursal(Base):
+    __tablename__= "sucursal"
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String, primary_key=False, nullable=False)
+    telefono = Column(String, primary_key=False, nullable=False)
+    email = Column(String, primary_key=False, nullable=False)
+    direccion = Column(String, primary_key=False, nullable=False)
+    id_ciudad = Column(Integer, ForeignKey("ciudad.id"))
+
+    ciudad = relationship("Ciudad", back_populates="sucursal", uselist=False)
+
+class Deposito(Base):
+    __tablename__= "deposito"
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String, primary_key=False, nullable=False)
+    telefono = Column(Integer, primary_key=False, nullable=False)
+    email = Column(String, primary_key=False, nullable=False)
+    direccion = Column(String, primary_key=False, nullable=False)
+    id_ciudad = Column(Integer, ForeignKey("ciudad.id"))
+
+    ciudad = relationship("Ciudad", back_populates="deposito", uselist=False)

@@ -14,8 +14,10 @@ from api.core.schemas import (
     ProveedorCreateRequest, 
     DespositResponse, 
     SucursalResponse,
-    StockCreateRequest,
-    StockResponse,
+    StockCreateRequest, 
+    StockResponse, 
+    SucursalCreateRequest,
+    DepositoCreateRequest
 )
 
 router = APIRouter()
@@ -78,3 +80,19 @@ async def listar(db: AsyncSession = Depends(get_db)):
 @router.post("/stock/", response_model=StockResponse)
 async def crear_stock(stock: StockCreateRequest, db: AsyncSession = Depends(get_db)):
     return await dal.crear_stock(db, stock)
+
+@router.get("/sucursal/", response_model = list[SucursalResponse])
+async def listar(db: AsyncSession = Depends(get_db)):
+    return await dal.obtener_sucursales(db)
+
+@router.post("/sucursal/", response_model = SucursalResponse)
+async def crear_sucursal(sucursal: SucursalCreateRequest, db: AsyncSession = Depends(get_db)):
+    return await dal.crear_sucursal(db, sucursal)
+
+@router.get("/deposito/", response_model = list[DepositoResponse])
+async def listar(db: AsyncSession = Depends(get_db)):
+    return await dal.obtener_depositos(db)
+
+@router.post("/deposito/", response_model = DepositoResponse)
+async def crear_deposito(deposito: DepositoCreateRequest, db: AsyncSession = Depends(get_db)):
+    return await dal.crear_depostio(db, deposito)

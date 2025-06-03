@@ -21,6 +21,19 @@ class CiudadCreateRequest(BaseModel):
     nombre: str
     id_provincia: int
 
+class SucursalCreateRequest(BaseModel):
+    nombre: str
+    telefono: str
+    email: str
+    direccion: str
+    id_ciudad: int
+
+class DepositoCreateRequest(BaseModel):
+    nombre: str
+    telefono: int
+    email: str
+    direccion: str
+    id_ciudad: int
 
 class RemitoCompraCreateRequest(BaseModel):
     fecha = date
@@ -72,7 +85,6 @@ class StockCreateRequest(BaseModel):
     id_sucursal: int
     id_deposito: int
 
-
 # RESPONSE
 class PaisResponse(BaseModel):
     id: int
@@ -107,6 +119,7 @@ class ClienteResponse(BaseModel):
     
     class Config:
         orm_mode = True
+
 
 class RemitoCompraResponse(BaseModel):
     fecha: date
@@ -171,5 +184,26 @@ class StockResponse(BaseModel):
     sucursal: SucursalResponse
     producto: ProductoResponse """
     
+    class Config:
+        orm_mode = True
+
+class SucursalResponse(BaseModel):
+    id: int
+    nombre: str
+    telefono: str
+    email: str
+    direccion: str
+    ciudad: CiudadResponse
+      
+    class Config:
+        orm_mode = True
+        
+ class DepositoResponse(BaseModel):
+    id: int
+    nombre: str
+    telefono: str
+    email: str
+    direccion: str
+      
     class Config:
         orm_mode = True

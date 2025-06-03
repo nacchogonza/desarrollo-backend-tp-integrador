@@ -5,11 +5,12 @@ from api.core.schemas import (
     ClienteCreateRequest,
     CiudadCreateRequest,
     ProvinciaCreateRequest,
-    PaisCreateRequest,
-    StockCreateRequest
+    PaisCreateRequest, 
+    StockCreateRequest,
+    SucursalCreateRequest,
+    DepositoCreateRequest
 )
-from api.core.models import Cliente, Ciudad, Provincia, Pais, Stock
-
+from api.core.models import Cliente, Ciudad, Provincia, Pais, Stock, Sucursal, Deposito
 
 # CLIENTE
 async def obtener_clientes(db: AsyncSession):
@@ -100,7 +101,6 @@ async def crear_pais(db: AsyncSession, pais: PaisCreateRequest):
     await db.refresh(nuevo_pais)
     return nuevo_pais
 
-
 # STOCK
 async def obtener_stocks(db: AsyncSession):
     result = await db.execute(
@@ -129,3 +129,37 @@ async def crear_stock(db: AsyncSession, stock: StockCreateRequest):
     )
     stock_con_relacion = result.scalar_one()
     return stock_con_relacion
+  
+# SUCURSAL  
+async def obtener_sucursales(db: AsyncSession):
+    result = await db.execute(select(Sucursal).options(selectinload(Sucursal.Ciudad)))
+    return result.scalars().all()
+
+
+async def crear_sucursal(db: AsyncSession, sucursal: SucursalCreateRequest):
+    nueva_sucursal = Sucursal(**sucursal.dict())
+    db.add(nueva_sucursal)
+    await db.commit()
+    await db.refresh(nueva_sucursal)
+    result = await db.execute(
+        select(Sucursal).options(selectinload(Sucursal.ciudad)).where(Sucursal.id == nueva_sucursal.id)
+    )
+    sucursal_con_relacion = result.scalar_one()
+    return sucursal_con_relacion
+
+# DEPOSITO 
+async def obtener_depositos(db: AsyncSession):
+    result = await db.execute(select(Deposito).options(selectinload(Deposito.Ciudad)))
+    return result.scalars().all()
+
+
+async def crear_depostio(db: AsyncSession, deposito: DepositoCreateRequest):
+    nuevo_deposito = Deposito(**deposito.dict())
+    db.add(nuevo_deposito)
+    await db.commit()
+    await db.refresh(nuevo_deposito)
+    result = await db.execute(
+        select(Deposito).options(selectinload(Deposito.ciudad)).where(Deposito.id == nuevo_deposito.id)
+    )
+    deposito_con_relacion = result.scalar_one()
+    return deposito_con_relacion
