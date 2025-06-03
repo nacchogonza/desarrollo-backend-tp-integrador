@@ -5,12 +5,12 @@ from api.core.schemas import (
     ClienteCreateRequest,
     CiudadCreateRequest,
     ProvinciaCreateRequest,
-    PaisCreateRequest,
+    PaisCreateRequest, 
+    StockCreateRequest,
     SucursalCreateRequest,
     DepositoCreateRequest
 )
-from api.core.models import Cliente, Ciudad, Provincia, Pais, Sucursal, Deposito
-
+from api.core.models import Cliente, Ciudad, Provincia, Pais, Stock, Sucursal, Deposito
 
 # CLIENTE
 async def obtener_clientes(db: AsyncSession):
@@ -101,6 +101,35 @@ async def crear_pais(db: AsyncSession, pais: PaisCreateRequest):
     await db.refresh(nuevo_pais)
     return nuevo_pais
 
+# STOCK
+async def obtener_stocks(db: AsyncSession):
+    result = await db.execute(
+        select(Stock).options(
+            selectinload(Stock.producto)
+            .selectinload(Stock.deposito)
+            .selectinload(Stock.sucursal)
+        )
+    )
+    return result.scalars().all()
+
+
+async def crear_stock(db: AsyncSession, stock: StockCreateRequest):
+    nuevo_stock = Stock(**stock.dict())
+    db.add(nuevo_stock)
+    await db.commit()
+    await db.refresh(nuevo_stock)
+    result = await db.execute(
+        select(Stock)
+        .options(
+            selectinload(Stock.producto)
+            .selectinload(Stock.deposito)
+            .selectinload(Stock.sucursal)
+        )
+        .where(Stock.id == nuevo_stock.id)
+    )
+    stock_con_relacion = result.scalar_one()
+    return stock_con_relacion
+  
 # SUCURSAL  
 async def obtener_sucursales(db: AsyncSession):
     result = await db.execute(select(Sucursal).options(selectinload(Sucursal.Ciudad)))
