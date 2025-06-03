@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import date
 
 # REQUEST
 class ClienteCreateRequest(BaseModel):
@@ -18,6 +19,22 @@ class ProvinciaCreateRequest(BaseModel):
 class CiudadCreateRequest(BaseModel):
     nombre: str
     id_provincia: int
+
+class ProductoCreateRequest(BaseModel):
+    nombre: str
+    descripcion: str
+    categoria: str
+    precioCompra: float
+    precioVenta: float
+
+class ProveedorCreateRequest(BaseModel):
+    nombre: str
+    direccion: str
+    id_ciudad: int
+    telefono: str
+    email: str
+    condicionRecepcion: date
+
     
 # RESPONSE
 class PaisResponse(BaseModel):
@@ -53,3 +70,23 @@ class ClienteResponse(BaseModel):
     class Config:
         orm_mode = True
     
+class ProductoResponse(BaseModel):
+    nombre: str
+    descripcion: str
+    categoria: str
+    precioCompra: float
+    precioVenta: float
+
+    class Config:
+        orm_mode = True
+
+class ProveedorResponse(BaseModel):
+    nombre: str
+    direccion: str
+    telefono: str
+    email: str
+    condicionRecepcion: date
+    ciudad: CiudadResponse
+
+    class Config:
+        orm_mode = True
