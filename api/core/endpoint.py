@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from api.core import dal, database
-from api.core.schemas import PaisResponse, PaisCreateRequest, ProvinciaResponse, ProvinciaCreateRequest, CiudadResponse, CiudadCreateRequest, ProveedorResponse, ProductoResponse, DespositResponse, SucursalResponse 
+from api.core.schemas import PaisResponse, PaisCreateRequest, ProvinciaResponse, ProvinciaCreateRequest, CiudadResponse, CiudadCreateRequest, ProductoResponse, ProductoCreateRequest, ProveedorResponse, ProveedorCreateRequest, DespositResponse, SucursalResponse
 
 router = APIRouter()
 
@@ -34,3 +34,18 @@ async def listar(db: AsyncSession = Depends(get_db)):
 async def crear_pais(pais: PaisCreateRequest, db: AsyncSession = Depends(get_db)):
     return await dal.crear_pais(db, pais)
 
+@router.get("/producto/", response_model= list[ProductoResponse])
+async def listar(db: AsyncSession = Depends(get_db)):
+    return await dal.obtener_productos(db)
+
+@router.post("/producto/", response_model= ProductoResponse)
+async def crear_producto(producto: ProductoCreateRequest, db: AsyncSession = Depends(get_db)):
+    return await dal.crear_producto(db, producto)
+
+@router.get("/proveedor/", response_model= list[ProveedorResponse])
+async def listar(db: AsyncSession = Depends(get_db)):
+    return await dal.obtener_proveedores(db)
+
+@router.post("/proveedor/", response_model= ProveedorResponse)
+async def crear_proveedor(proveedor: ProveedorCreateRequest, db: AsyncSession = Depends(get_db)):
+    return await dal.crear_proveedor(db, proveedor)

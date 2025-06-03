@@ -1,8 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, VARCHAR
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, VARCHAR, Float
 from sqlalchemy.orm import relationship
 
 from api.core.database import Base
-
 
 class Cliente(Base):
     __tablename__ = "cliente"
@@ -23,6 +22,7 @@ class Ciudad(Base):
     
     cliente = relationship("Cliente", back_populates="ciudad", uselist=False)
     provincia = relationship("Provincia", back_populates="ciudad", uselist=False)
+    proveedor = relationship("Proveedor", back_populates="ciudad", uselist=False)
     
 class Provincia(Base):
     __tablename__ = "provincia"
@@ -93,3 +93,29 @@ class RemitoTransferencia(Base):
     deposito = relationship("Depósito", back_populates="Remito de Transferencia", uselist=True)
     producto = relationship("Producto", back_populates="Remito de Transferencia", uselist=True)
     sucursal = relationship("Sucursal", back_populates="Remito de Transferencia", uselist=True) 
+
+class Producto(Base):
+    __tablename__ = "producto"
+    id = Column(Integer, primary_key=True, index=True)  
+    nombre = Column(String, primary_key=False, nullable=False)
+    descripcion = Column(String, primary_key=False, nullable=False)
+    categoria = Column(String, primary_key=False, nullable=False)
+    precioCompra = Column(Float, primary_key=False, nullable=False)
+    precioVenta = Column(Float, primary_key=False, nullable=False)
+
+    detalleOrdenVenta = relationship("DetalleOrdenVenta", back_populates="producto", uselist=False)
+    detalleOrdenCompra = relationship("DetalleOrdenCompra", back_populates="producto", uselist=False)
+    stock = relationship("Stock",back_populates="producto", uselist=False)
+
+class Proveedor(Base):
+    __tablename__ = "proveedor"
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String, primary_key=False, nullable= False)
+    direccion = Column(String, primary_key=False, nullable=False)
+    id_ciudad = Column(Integer,ForeignKey("ciudad.id"))    
+    telefono = Column(String, primary_key=False, nullable=False)
+    email = Column(String, primary_key=False, nullable=False)
+    condicionRecepcion = Column(Date, primary_key=False, nullable=False)
+
+    remitoCompra = relationship("RemitoCompra", back_populates="proveedor", uselist=False)
+    ciudad = relationship("Ciudad", back_populates="proveedor", uselist=False)

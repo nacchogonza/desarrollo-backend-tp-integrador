@@ -1,5 +1,6 @@
 from datetime import date
 from pydantic import BaseModel
+from datetime import date
 
 # REQUEST
 class ClienteCreateRequest(BaseModel):
@@ -47,6 +48,22 @@ class RemitoTransferenciaCreateRequest(BaseModel):
     id_deposito = int
     id_producto = int
     id_sucursal = int
+
+class ProductoCreateRequest(BaseModel):
+    nombre: str
+    descripcion: str
+    categoria: str
+    precioCompra: float
+    precioVenta: float
+
+class ProveedorCreateRequest(BaseModel):
+    nombre: str
+    direccion: str
+    id_ciudad: int
+    telefono: str
+    email: str
+    condicionRecepcion: date
+
 
 # RESPONSE
 class PaisResponse(BaseModel):
@@ -108,6 +125,13 @@ class RemitoDevolucionRequest(BaseModel):
     cliente:  ClienteResponse
     """producto: ProductoResponse
     sucursal: SucursalResponse"""
+    
+class ProductoResponse(BaseModel):
+    nombre: str
+    descripcion: str
+    categoria: str
+    precioCompra: float
+    precioVenta: float
 
     class Config:
         orm_mode = True
@@ -118,6 +142,14 @@ class RemitoTransferenciaRequest(BaseModel):
     """deposito: DepositoResponse
     producto: ProductoResponse
     sucursal: SucursalResponse"""
+
+class ProveedorResponse(BaseModel):
+    nombre: str
+    direccion: str
+    telefono: str
+    email: str
+    condicionRecepcion: date
+    ciudad: CiudadResponse
 
     class Config:
         orm_mode = True
