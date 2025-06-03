@@ -1,3 +1,4 @@
+from datetime import date
 from pydantic import BaseModel
 from datetime import date
 
@@ -20,6 +21,34 @@ class CiudadCreateRequest(BaseModel):
     nombre: str
     id_provincia: int
 
+class RemitoCompraCreateRequest(BaseModel):
+    fecha = date
+    cantidad = int
+    id_proveedor = int
+    id_producto = int
+    id_deposito = int
+
+class RemitoVentaCreateRequest(BaseModel):
+    fecha = date
+    cantidad = int
+    id_cliente = int
+    id_producto = int
+    id_sucursal = int
+
+class RemitoDevolucionCreateRequest(BaseModel):
+    fecha = date
+    cantidad = int
+    id_cliente = int
+    id_producto = int
+    id_sucursal = int
+
+class RemitoTransferenciaCreateRequest(BaseModel):
+    fecha = date
+    cantidad = int
+    id_deposito = int
+    id_producto = int
+    id_sucursal = int
+
 class ProductoCreateRequest(BaseModel):
     nombre: str
     descripcion: str
@@ -35,7 +64,7 @@ class ProveedorCreateRequest(BaseModel):
     email: str
     condicionRecepcion: date
 
-    
+
 # RESPONSE
 class PaisResponse(BaseModel):
     id: int
@@ -69,6 +98,33 @@ class ClienteResponse(BaseModel):
     
     class Config:
         orm_mode = True
+
+class RemitoCompraResponse(BaseModel):
+    fecha: date
+    cantidad: int
+    """proveedor: ProveedorResponse
+    producto: ProductoResponse
+    deposito = DepositoResponse"""
+
+    class Config:
+        orm_mode = True
+
+class RemitoVentaRequest(BaseModel):
+    fecha: date
+    cantidad: int
+    cliente: ClienteResponse
+    """producto: ProductoResponse
+    sucursal: SucursalResponse"""
+
+    class Config:
+        orm_mode = True
+
+class RemitoDevolucionRequest(BaseModel):
+    fecha: date
+    cantidad: int
+    cliente:  ClienteResponse
+    """producto: ProductoResponse
+    sucursal: SucursalResponse"""
     
 class ProductoResponse(BaseModel):
     nombre: str
@@ -79,6 +135,13 @@ class ProductoResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+class RemitoTransferenciaRequest(BaseModel):
+    fecha = date
+    cantidad = int
+    """deposito: DepositoResponse
+    producto: ProductoResponse
+    sucursal: SucursalResponse"""
 
 class ProveedorResponse(BaseModel):
     nombre: str

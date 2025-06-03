@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from api.core import dal, database
-from api.core.schemas import PaisResponse, PaisCreateRequest, ProvinciaResponse, ProvinciaCreateRequest, CiudadResponse, CiudadCreateRequest, ProductoResponse, ProductoCreateRequest, ProveedorResponse, ProveedorCreateRequest
+from api.core.schemas import PaisResponse, PaisCreateRequest, ProvinciaResponse, ProvinciaCreateRequest, CiudadResponse, CiudadCreateRequest, ProductoResponse, ProductoCreateRequest, ProveedorResponse, ProveedorCreateRequest, DespositResponse, SucursalResponse
 
 router = APIRouter()
 
