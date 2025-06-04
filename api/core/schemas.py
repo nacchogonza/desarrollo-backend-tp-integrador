@@ -70,13 +70,15 @@ class ProductoCreateRequest(BaseModel):
     precioCompra: float
     precioVenta: float
 
+    id_proveedor: int
+    id_stock: int
+
 class ProveedorCreateRequest(BaseModel):
     nombre: str
-    direccion: str
-    id_ciudad: int
     telefono: str
     email: str
-    condicionRecepcion: date
+    direccion: str
+    id_ciudad: int
       
 class StockCreateRequest(BaseModel):
     cantidad_sucursal: int
@@ -149,6 +151,7 @@ class RemitoDevolucionRequest(BaseModel):
     sucursal: SucursalResponse"""
     
 class ProductoResponse(BaseModel):
+    id: int
     nombre: str
     descripcion: str
     categoria: str
@@ -166,12 +169,11 @@ class RemitoTransferenciaRequest(BaseModel):
     sucursal: SucursalResponse"""
 
 class ProveedorResponse(BaseModel):
+    id: int
     nombre: str
-    direccion: str
     telefono: str
     email: str
-    condicionRecepcion: date
-    ciudad: CiudadResponse
+    direccion: str
 
     class Config:
         orm_mode = True
@@ -198,7 +200,7 @@ class SucursalResponse(BaseModel):
     class Config:
         orm_mode = True
         
- class DepositoResponse(BaseModel):
+class DepositoResponse(BaseModel):
     id: int
     nombre: str
     telefono: str
