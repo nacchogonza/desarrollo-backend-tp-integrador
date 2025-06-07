@@ -45,33 +45,33 @@ class DepositoCreateRequest(BaseModel):
 class RemitoCompraCreateRequest(BaseModel):
     fecha: date
     cantidad: int
-    """ id_proveedor = int
-    id_producto = int
-    id_deposito = int """
+    """ id_proveedor: int
+    id_producto: int
+    id_deposito: int """
 
 
 class RemitoVentaCreateRequest(BaseModel):
     fecha: date
     cantidad: int
-    """ id_cliente = int
-    id_producto = int
-    id_sucursal = int """
+    """ id_cliente: int
+    id_producto: int
+    id_sucursal: int """
 
 
 class RemitoDevolucionCreateRequest(BaseModel):
     fecha: date
     cantidad: int
-    """ id_cliente = int
-    id_producto = int
-    id_sucursal = int """
+    """ id_cliente: int
+    id_producto: int
+    id_sucursal: int """
 
 
 class RemitoTransferenciaCreateRequest(BaseModel):
     fecha: date
     cantidad: int
-    """ id_deposito = int
-    id_producto = int
-    id_sucursal = int """
+    """ id_deposito: int
+    id_producto: int
+    id_sucursal: int """
 
 
 class ProductoCreateRequest(BaseModel):
@@ -143,7 +143,7 @@ class RemitoCompraResponse(BaseModel):
     cantidad: int
     """proveedor: ProveedorResponse
     producto: ProductoResponse
-    deposito = DepositoResponse"""
+    deposito: DepositoResponse"""
 
     class Config:
         orm_mode = True
