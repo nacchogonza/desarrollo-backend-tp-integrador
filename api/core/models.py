@@ -103,22 +103,31 @@ class Producto(Base):
     precioCompra = Column(Float, primary_key=False, nullable=False)
     precioVenta = Column(Float, primary_key=False, nullable=False)
 
-    detalleOrdenVenta = relationship("DetalleOrdenVenta", back_populates="producto", uselist=False)
-    detalleOrdenCompra = relationship("DetalleOrdenCompra", back_populates="producto", uselist=False)
+    id_proveedor = Column(Integer, ForeignKey("proveedor.id"))
+    id_stock = Column(Integer, ForeignKey("stock.id"))
+
+    remito_compra = relationship("RemitoCompra", back_populates="producto")
+    remito_venta = relationship("RemitoVenta", back_populates="producto")
+    remito_transferencia = relationship("RemitoTransferencia", back_populates="producto")
+    remito_devolucion = relationship("RemitoDevolucion", back_populates="producto")
+
+    proveedor = relationship("Proveedor", back_populates="producto", uselist=False)
     stock = relationship("Stock",back_populates="producto", uselist=False)
+   
 
 class Proveedor(Base):
     __tablename__ = "proveedor"
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, primary_key=False, nullable= False)
-    direccion = Column(String, primary_key=False, nullable=False)
-    id_ciudad = Column(Integer,ForeignKey("ciudad.id"))    
     telefono = Column(String, primary_key=False, nullable=False)
     email = Column(String, primary_key=False, nullable=False)
-    condicionRecepcion = Column(Date, primary_key=False, nullable=False)
+    direccion = Column(String, primary_key=False, nullable=False)
 
-    remitoCompra = relationship("RemitoCompra", back_populates="proveedor", uselist=False)
+    id_ciudad = Column(Integer,ForeignKey("ciudad.id"))    
+
+    remito_compra = relationship("RemitoCompra", back_populates="proveedor")
     ciudad = relationship("Ciudad", back_populates="proveedor", uselist=False)
+    producto = relationship("Producto", back_populates="proveedor")
 
 class Stock(Base):
     __tablename__ = "stock"
