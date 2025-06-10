@@ -12,7 +12,7 @@ from api.core.schemas import (
     ProductoCreateRequest, 
     ProveedorResponse, 
     ProveedorCreateRequest, 
-    DepositoResponse, 
+    DepositoResponse,
     SucursalResponse,
     StockCreateRequest, 
     StockResponse, 

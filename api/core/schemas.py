@@ -2,6 +2,7 @@ from datetime import date
 from pydantic import BaseModel
 from datetime import date
 
+
 # REQUEST
 class ClienteCreateRequest(BaseModel):
     nombre: str
@@ -9,17 +10,21 @@ class ClienteCreateRequest(BaseModel):
     email: str
     direccion: str
     id_ciudad: int
-    
+
+
 class PaisCreateRequest(BaseModel):
     nombre: str
-    
+
+
 class ProvinciaCreateRequest(BaseModel):
     nombre: str
     id_pais: int
-    
+
+
 class CiudadCreateRequest(BaseModel):
     nombre: str
     id_provincia: int
+
 
 class SucursalCreateRequest(BaseModel):
     nombre: str
@@ -28,6 +33,7 @@ class SucursalCreateRequest(BaseModel):
     direccion: str
     id_ciudad: int
 
+
 class DepositoCreateRequest(BaseModel):
     nombre: str
     telefono: int
@@ -35,33 +41,38 @@ class DepositoCreateRequest(BaseModel):
     direccion: str
     id_ciudad: int
 
+
 class RemitoCompraCreateRequest(BaseModel):
-    fecha = date
-    cantidad = int
-    id_proveedor = int
-    id_producto = int
-    id_deposito = int
+    fecha: date
+    cantidad: int
+    """ id_proveedor: int
+    id_producto: int
+    id_deposito: int """
+
 
 class RemitoVentaCreateRequest(BaseModel):
-    fecha = date
-    cantidad = int
-    id_cliente = int
-    id_producto = int
-    id_sucursal = int
+    fecha: date
+    cantidad: int
+    """ id_cliente: int
+    id_producto: int
+    id_sucursal: int """
+
 
 class RemitoDevolucionCreateRequest(BaseModel):
-    fecha = date
-    cantidad = int
-    id_cliente = int
-    id_producto = int
-    id_sucursal = int
+    fecha: date
+    cantidad: int
+    """ id_cliente: int
+    id_producto: int
+    id_sucursal: int """
+
 
 class RemitoTransferenciaCreateRequest(BaseModel):
-    fecha = date
-    cantidad = int
-    id_deposito = int
-    id_producto = int
-    id_sucursal = int
+    fecha: date
+    cantidad: int
+    """ id_deposito: int
+    id_producto: int
+    id_sucursal: int """
+
 
 class ProductoCreateRequest(BaseModel):
     nombre: str
@@ -87,30 +98,34 @@ class StockCreateRequest(BaseModel):
     id_sucursal: int
     id_deposito: int
 
+
 # RESPONSE
 class PaisResponse(BaseModel):
     id: int
     nombre: str
-    
+
     class Config:
         orm_mode = True
-        
+
+
 class ProvinciaResponse(BaseModel):
     id: int
     nombre: str
     pais: PaisResponse
-    
+
     class Config:
         orm_mode = True
+
 
 class CiudadResponse(BaseModel):
     id: int
     nombre: str
     provincia: ProvinciaResponse
-    
+
     class Config:
         orm_mode = True
-        
+
+
 class ClienteResponse(BaseModel):
     id: int
     nombre: str
@@ -118,7 +133,7 @@ class ClienteResponse(BaseModel):
     email: str
     direccion: str
     ciudad: CiudadResponse
-    
+
     class Config:
         orm_mode = True
 
@@ -128,10 +143,11 @@ class RemitoCompraResponse(BaseModel):
     cantidad: int
     """proveedor: ProveedorResponse
     producto: ProductoResponse
-    deposito = DepositoResponse"""
+    deposito: DepositoResponse"""
 
     class Config:
         orm_mode = True
+
 
 class RemitoVentaRequest(BaseModel):
     fecha: date
@@ -143,13 +159,15 @@ class RemitoVentaRequest(BaseModel):
     class Config:
         orm_mode = True
 
+
 class RemitoDevolucionRequest(BaseModel):
     fecha: date
     cantidad: int
-    cliente:  ClienteResponse
+    cliente: ClienteResponse
     """producto: ProductoResponse
     sucursal: SucursalResponse"""
-    
+
+
 class ProductoResponse(BaseModel):
     id: int
     nombre: str
@@ -161,12 +179,14 @@ class ProductoResponse(BaseModel):
     class Config:
         orm_mode = True
 
+
 class RemitoTransferenciaRequest(BaseModel):
-    fecha = date
-    cantidad = int
+    fecha: date
+    cantidad: int
     """deposito: DepositoResponse
     producto: ProductoResponse
     sucursal: SucursalResponse"""
+
 
 class ProveedorResponse(BaseModel):
     id: int
@@ -177,7 +197,8 @@ class ProveedorResponse(BaseModel):
 
     class Config:
         orm_mode = True
-        
+
+
 class StockResponse(BaseModel):
     id: int
     cantidad_sucursal: int
@@ -185,9 +206,10 @@ class StockResponse(BaseModel):
     """ deposito: DepositoResponse
     sucursal: SucursalResponse
     producto: ProductoResponse """
-    
+
     class Config:
         orm_mode = True
+
 
 class SucursalResponse(BaseModel):
     id: int
@@ -196,7 +218,7 @@ class SucursalResponse(BaseModel):
     email: str
     direccion: str
     ciudad: CiudadResponse
-      
+
     class Config:
         orm_mode = True
         
@@ -206,6 +228,6 @@ class DepositoResponse(BaseModel):
     telefono: str
     email: str
     direccion: str
-      
+
     class Config:
         orm_mode = True
