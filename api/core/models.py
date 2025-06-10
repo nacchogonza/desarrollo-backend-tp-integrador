@@ -106,10 +106,10 @@ class Producto(Base):
     id_proveedor = Column(Integer, ForeignKey("proveedor.id"))
     id_stock = Column(Integer, ForeignKey("stock.id"))
 
-    remitoCompra = relationship("RemitoCompra", back_populates="producto")
-    remitoVenta = relationship("RemitoVenta", back_populates="producto")
-    remitoTransferencia = relationship("RemitoTransferencia", back_populates="producto")
-    remitoDevolucion = relationship("RemitoDevolucion", back_populates="producto")
+    remito_compra = relationship("RemitoCompra", back_populates="producto")
+    remito_venta = relationship("RemitoVenta", back_populates="producto")
+    remito_transferencia = relationship("RemitoTransferencia", back_populates="producto")
+    remito_devolucion = relationship("RemitoDevolucion", back_populates="producto")
 
     proveedor = relationship("Proveedor", back_populates="producto", uselist=False)
     stock = relationship("Stock",back_populates="producto", uselist=False)
@@ -125,7 +125,7 @@ class Proveedor(Base):
 
     id_ciudad = Column(Integer,ForeignKey("ciudad.id"))    
 
-    remitoCompra = relationship("RemitoCompra", back_populates="proveedor")
+    remito_compra = relationship("RemitoCompra", back_populates="proveedor")
     ciudad = relationship("Ciudad", back_populates="proveedor", uselist=False)
     producto = relationship("Producto", back_populates="proveedor")
 
