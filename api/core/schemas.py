@@ -4,14 +4,6 @@ from datetime import date
 
 
 # REQUEST
-class ClienteCreateRequest(BaseModel):
-    nombre: str
-    telefono: str
-    email: str
-    direccion: str
-    id_ciudad: int
-
-
 class PaisCreateRequest(BaseModel):
     nombre: str
 
@@ -126,18 +118,6 @@ class CiudadResponse(BaseModel):
         orm_mode = True
 
 
-class ClienteResponse(BaseModel):
-    id: int
-    nombre: str
-    telefono: str
-    email: str
-    direccion: str
-    ciudad: CiudadResponse
-
-    class Config:
-        orm_mode = True
-
-
 class RemitoCompraResponse(BaseModel):
     fecha: date
     cantidad: int
@@ -152,8 +132,8 @@ class RemitoCompraResponse(BaseModel):
 class RemitoVentaRequest(BaseModel):
     fecha: date
     cantidad: int
-    cliente: ClienteResponse
-    """producto: ProductoResponse
+    """cliente: ClienteResponse
+    producto: ProductoResponse
     sucursal: SucursalResponse"""
 
     class Config:
@@ -163,8 +143,8 @@ class RemitoVentaRequest(BaseModel):
 class RemitoDevolucionRequest(BaseModel):
     fecha: date
     cantidad: int
-    cliente: ClienteResponse
-    """producto: ProductoResponse
+    """cliente: ClienteResponse
+    producto: ProductoResponse
     sucursal: SucursalResponse"""
 
 
