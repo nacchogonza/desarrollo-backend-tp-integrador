@@ -100,15 +100,15 @@ class RemitoTransferencia(Base):
 
 class Producto(Base):
     __tablename__ = "producto"
-    id = Column(Integer, primary_key=True, index=True)  
-    nombre = Column(String, primary_key=False, nullable=False)
-    descripcion = Column(String, primary_key=False, nullable=False)
-    categoria = Column(String, primary_key=False, nullable=False)
-    precioCompra = Column(Float, primary_key=False, nullable=False)
-    precioVenta = Column(Float, primary_key=False, nullable=False)
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String, nullable=False)
+    descripcion = Column(String, nullable=False)
+    categoria = Column(String, nullable=False)
+    precioCompra = Column(Float, nullable=False)
+    precioVenta = Column(Float, nullable=False)
 
     id_proveedor = Column(Integer, ForeignKey("proveedor.id"))
-    id_stock = Column(Integer, ForeignKey("stock.id"))
+    # id_stock = Column(Integer, ForeignKey("stock.id")) # <--- ¡Esta FK en Producto causa el problema!
 
     remito_compra = relationship("RemitoCompra", back_populates="producto")
     remito_venta = relationship("RemitoVenta", back_populates="producto")
@@ -116,7 +116,15 @@ class Producto(Base):
     remito_devolucion = relationship("RemitoDevolucion", back_populates="producto")
 
     proveedor = relationship("Proveedor", back_populates="producto", uselist=False)
-    stock = relationship("Stock",back_populates="producto", uselist=False)
+
+    # Corregido: La relación 'stock' en Producto usará la FK 'id_producto' en el modelo Stock
+    stock = relationship(
+        "Stock",
+        back_populates="producto",
+        uselist=False,
+        primaryjoin="Producto.id == Stock.id_producto", # <--- Especifica la condición de unión
+        foreign_keys="[Stock.id_producto]" # <--- Especifica la clave foránea en la tabla Stock
+    )
    
 
 class Proveedor(Base):
@@ -140,11 +148,19 @@ class Stock(Base):
     cantidad_deposito = Column(Integer, primary_key=False, index=False)
     id_deposito = Column(Integer, ForeignKey("deposito.id"))
     id_sucursal = Column(Integer, ForeignKey("sucursal.id"))
-    id_producto = Column(Integer, ForeignKey("producto.id"))
-    
+    id_producto = Column(Integer, ForeignKey("producto.id"), unique=True) # <--- Añadir unique=True si es 1-1
+
     deposito = relationship("Deposito", back_populates="stock", uselist=False)
     sucursal = relationship("Sucursal", back_populates="stock", uselist=False)
-    producto = relationship("Producto", back_populates="stock", uselist=False)
+
+    # Corregido: La relación 'producto' en Stock usará la FK 'id_producto' en sí misma
+    producto = relationship(
+        "Producto",
+        back_populates="stock",
+        uselist=False,
+        primaryjoin="Stock.id_producto == Producto.id", # <--- Especifica la condición de unión
+        foreign_keys="[Stock.id_producto]" # <--- Especifica la clave foránea en la tabla Stock
+    )
 
 class Sucursal(Base):
     __tablename__= "sucursal"
