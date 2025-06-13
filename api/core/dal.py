@@ -132,7 +132,7 @@ async def crear_stock(db: AsyncSession, stock: StockCreateRequest):
   
 # SUCURSAL  
 async def obtener_sucursales(db: AsyncSession):
-    result = await db.execute(select(Sucursal).options(selectinload(Sucursal.Ciudad)))
+    result = await db.execute(select(Sucursal).options(selectinload(Sucursal.ciudad)))
     return result.scalars().all()
 
 
@@ -149,11 +149,11 @@ async def crear_sucursal(db: AsyncSession, sucursal: SucursalCreateRequest):
 
 # DEPOSITO 
 async def obtener_depositos(db: AsyncSession):
-    result = await db.execute(select(Deposito).options(selectinload(Deposito.Ciudad)))
+    result = await db.execute(select(Deposito).options(selectinload(Deposito.ciudad)))
     return result.scalars().all()
 
 
-async def crear_depostio(db: AsyncSession, deposito: DepositoCreateRequest):
+async def crear_deposito(db: AsyncSession, deposito: DepositoCreateRequest):
     nuevo_deposito = Deposito(**deposito.dict())
     db.add(nuevo_deposito)
     await db.commit()

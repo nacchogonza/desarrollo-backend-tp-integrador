@@ -36,32 +36,32 @@ class DepositoCreateRequest(BaseModel):
     id_ciudad: int
 
 class RemitoCompraCreateRequest(BaseModel):
-    fecha = date
-    cantidad = int
-    id_proveedor = int
-    id_producto = int
-    id_deposito = int
+    fecha : date
+    cantidad : int
+    id_proveedor : int
+    id_producto : int
+    id_deposito : int
 
 class RemitoVentaCreateRequest(BaseModel):
-    fecha = date
-    cantidad = int
-    id_cliente = int
-    id_producto = int
-    id_sucursal = int
+    fecha : date
+    cantidad : int
+    id_cliente : int
+    id_producto : int
+    id_sucursal : int
 
 class RemitoDevolucionCreateRequest(BaseModel):
-    fecha = date
-    cantidad = int
-    id_cliente = int
-    id_producto = int
-    id_sucursal = int
+    fecha : date
+    cantidad : int
+    id_cliente : int
+    id_producto : int
+    id_sucursal : int
 
 class RemitoTransferenciaCreateRequest(BaseModel):
-    fecha = date
-    cantidad = int
-    id_deposito = int
-    id_producto = int
-    id_sucursal = int
+    fecha : date
+    cantidad : int
+    id_deposito : int
+    id_producto : int
+    id_sucursal : int
 
 class ProductoCreateRequest(BaseModel):
     nombre: str
@@ -159,8 +159,8 @@ class ProductoResponse(BaseModel):
         orm_mode = True
 
 class RemitoTransferenciaRequest(BaseModel):
-    fecha = date
-    cantidad = int
+    fecha : date
+    cantidad : int
     """deposito: DepositoResponse
     producto: ProductoResponse
     sucursal: SucursalResponse"""
@@ -180,9 +180,9 @@ class StockResponse(BaseModel):
     id: int
     cantidad_sucursal: int
     cantidad_deposito: int
-    """ deposito: DepositoResponse
-    sucursal: SucursalResponse
-    producto: ProductoResponse """
+    """deposito: DepositoResponse
+    sucursal: SucursalResponse"""
+    producto: ProductoResponse
     
     class Config:
         orm_mode = True
@@ -198,7 +198,7 @@ class SucursalResponse(BaseModel):
     class Config:
         orm_mode = True
         
- class DepositoResponse(BaseModel):
+class DepositoResponse(BaseModel):
     id: int
     nombre: str
     telefono: str
