@@ -2,22 +2,11 @@ from datetime import date
 from pydantic import BaseModel
 from datetime import date
 
+from api.resources.location.schemas import CiudadResponse
+from api.resources.cliente.schemas import ClienteResponse
+
 
 # REQUEST
-class PaisCreateRequest(BaseModel):
-    nombre: str
-
-
-class ProvinciaCreateRequest(BaseModel):
-    nombre: str
-    id_pais: int
-
-
-class CiudadCreateRequest(BaseModel):
-    nombre: str
-    id_provincia: int
-
-
 class SucursalCreateRequest(BaseModel):
     nombre: str
     telefono: str
@@ -92,32 +81,6 @@ class StockCreateRequest(BaseModel):
 
 
 # RESPONSE
-class PaisResponse(BaseModel):
-    id: int
-    nombre: str
-
-    class Config:
-        orm_mode = True
-
-
-class ProvinciaResponse(BaseModel):
-    id: int
-    nombre: str
-    pais: PaisResponse
-
-    class Config:
-        orm_mode = True
-
-
-class CiudadResponse(BaseModel):
-    id: int
-    nombre: str
-    provincia: ProvinciaResponse
-
-    class Config:
-        orm_mode = True
-
-
 class RemitoCompraResponse(BaseModel):
     fecha: date
     cantidad: int
@@ -132,8 +95,8 @@ class RemitoCompraResponse(BaseModel):
 class RemitoVentaRequest(BaseModel):
     fecha: date
     cantidad: int
-    """cliente: ClienteResponse
-    producto: ProductoResponse
+    cliente: ClienteResponse
+    """producto: ProductoResponse
     sucursal: SucursalResponse"""
 
     class Config:
@@ -143,8 +106,8 @@ class RemitoVentaRequest(BaseModel):
 class RemitoDevolucionRequest(BaseModel):
     fecha: date
     cantidad: int
-    """cliente: ClienteResponse
-    producto: ProductoResponse
+    cliente: ClienteResponse
+    """producto: ProductoResponse
     sucursal: SucursalResponse"""
 
 

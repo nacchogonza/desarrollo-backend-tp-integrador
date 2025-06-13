@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from api.core import database
-from api.resources.cliente.schemas import ClienteResponse, ClienteCreateRequest
-from api.resources.cliente.dal import obtener_clientes, crear_cliente
+from .schemas import ClienteResponse, ClienteCreateRequest
+from .dal import obtener_clientes, crear_cliente
 
 router = APIRouter()
 

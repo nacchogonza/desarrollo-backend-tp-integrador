@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from api.core.schemas import CiudadResponse
+from ..location.schemas import CiudadResponse
 
 # REQUEST
 class ClienteCreateRequest(BaseModel):
