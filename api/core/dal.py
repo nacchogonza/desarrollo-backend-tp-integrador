@@ -132,7 +132,7 @@ async def crear_stock(db: AsyncSession, stock: StockCreateRequest):
   
 # SUCURSAL  
 async def obtener_sucursales(db: AsyncSession):
-    result = await db.execute(select(Sucursal).options(selectinload(Sucursal.Ciudad)))
+    result = await db.execute(select(Sucursal).options(selectinload(Sucursal.ciudad)))
     return result.scalars().all()
 
 
@@ -149,7 +149,7 @@ async def crear_sucursal(db: AsyncSession, sucursal: SucursalCreateRequest):
 
 # DEPOSITO 
 async def obtener_depositos(db: AsyncSession):
-    result = await db.execute(select(Deposito).options(selectinload(Deposito.Ciudad)))
+    result = await db.execute(select(Deposito).options(selectinload(Deposito.ciudad)))
     return result.scalars().all()
 
 
