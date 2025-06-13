@@ -71,13 +71,6 @@ class ProveedorCreateRequest(BaseModel):
     email: str
     direccion: str
     id_ciudad: int
-      
-class StockCreateRequest(BaseModel):
-    cantidad_sucursal: int
-    cantidad_deposito: int
-    id_producto: int
-    id_sucursal: int
-    id_deposito: int
 
 
 # RESPONSE
@@ -140,19 +133,6 @@ class ProveedorResponse(BaseModel):
 
     class Config:
         orm_mode = True
-
-
-class StockResponse(BaseModel):
-    id: int
-    cantidad_sucursal: int
-    cantidad_deposito: int
-    """ deposito: DepositoResponse
-    sucursal: SucursalResponse
-    producto: ProductoResponse """
-
-    class Config:
-        orm_mode = True
-
 
 class SucursalResponse(BaseModel):
     id: int
