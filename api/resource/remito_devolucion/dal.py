@@ -26,7 +26,7 @@ async def create_remito_devolucion(db: AsyncSession, remito_data: RemitoDevoluci
 
 async def get_remito_devolucion_by_id(db: AsyncSession, remito_id: int):
     
-    stmt = select(RemitoCompra).where(RemitoCompra.id == remito_id)
+    stmt = select(RemitoDevolucion).where(RemitoDevolucion.id == remito_id)
     result = await db.execute(stmt)
     return result.scalar_one_or_none() # Obtiene un único resultado o None
 

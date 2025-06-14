@@ -9,7 +9,22 @@ from api.core.config import settings
 from api.core import models
 from api.core.database import engine, Base
 
-app = FastAPI(title=settings.PROJECT_NAME)
+from .resource.remito_devolucion.endpionts import router as remito_devolucion_router
+from .resource.remito_compra.endpoints import router as remito_compra_router
+from .resource.remito_transferencia import router as remito_transferencia_router
+from . resource.remito_venta import router as remito_venta_router
+
+
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    description="API para la gestion de stocks",
+    version="0.0.1")
+
+app.include_router(remito_devolucion_router)
+app.include_router(remito_compra_router)
+app.include_router(remito_transferencia_router)
+app.include_router(remito_venta_router)
+
 
 async def create_db_tables():
     async with engine.begin() as conn:

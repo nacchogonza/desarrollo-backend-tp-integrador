@@ -10,7 +10,7 @@ from api.core.schemas import (
     SucursalCreateRequest,
     DepositoCreateRequest
 )
-from api.core.models import Cliente, Ciudad, Provincia, Pais, Stock, Sucursal, Deposito
+from api.core.models import Cliente, Ciudad, Provincia, Pais, Stock, Sucursal, Deposito, RemitoCompra, RemitoVenta, RemitoDevolucion, RemitoTransferencia
 
 # CLIENTE
 async def obtener_clientes(db: AsyncSession):

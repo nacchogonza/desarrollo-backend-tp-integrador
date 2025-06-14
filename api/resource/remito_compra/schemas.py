@@ -1,9 +1,8 @@
 from datetime import date
 from pydantic import BaseModel
-# RemitoCompraResponse tiene relaciones (proveedor, producto, deposito),
-# importar sus Response Schemas aquí. Por ejemplo:
-# from ...core.schemas import ProveedorResponse, ProductoResponse, DepositoResponse
-# O si esas entidades también se mueven, la ruta cambiará. Por ahora, si no existen, déjalas comentadas.
+#from ...resource.proveedor.schemas import ProveedorResponse
+#from ...resource.producto.schemas import ProductoResponse
+#from ...resource.deposito.schemas import DepositoResponse
 
 class RemitoCompraCreateRequest(BaseModel):
     fecha : date

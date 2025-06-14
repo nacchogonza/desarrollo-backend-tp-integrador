@@ -112,24 +112,6 @@ class ClienteResponse(BaseModel):
     class Config:
         orm_mode = True
 
-
-
-
-
-class RemitoVentaResponse(BaseModel):
-    fecha: date
-    cantidad: int
-    cliente: ClienteResponse
-    """producto: ProductoResponse
-    sucursal: SucursalResponse"""
-
-    class Config:
-        orm_mode = True
-
-
-
-
-
 class ProductoResponse(BaseModel):
     id: int
     nombre: str
@@ -140,15 +122,6 @@ class ProductoResponse(BaseModel):
 
     class Config:
         orm_mode = True
-
-
-class RemitoTransferenciaResponse(BaseModel):
-    fecha: date
-    cantidad: int
-    """deposito: DepositoResponse
-    producto: ProductoResponse
-    sucursal: SucursalResponse"""
-
 
 class ProveedorResponse(BaseModel):
     id: int
