@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, status
 from typing import List
 from sqlalchemy.ext.asyncio import AsyncSession
 from api.core.database import get_db
-from api.resource.producto import dal
-from api.resource.producto.schemas import (
+from api.resources.producto import dal
+from api.resources.producto.schemas import (
     ProductoResponse, 
     ProductoCreateRequest,
     )

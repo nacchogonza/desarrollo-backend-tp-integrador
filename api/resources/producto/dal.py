@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
-from api.resource.producto.schemas import (
+from api.resources.producto.schemas import (
    ProductoCreateRequest
 )
 from api.core.models import Producto

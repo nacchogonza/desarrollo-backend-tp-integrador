@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
-from api.resource.proveedor.schemas import (
+from api.resources.proveedor.schemas import (
    ProveedorCreateRequest
 )
 from api.core.models import Proveedor

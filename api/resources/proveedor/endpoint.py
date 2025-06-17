@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from api.resource.proveedor import dal
+from api.resources.proveedor import dal
 from api.core import database
-from api.resource.proveedor.schemas import (
+from api.resources.proveedor.schemas import (
     ProveedorResponse, 
     ProveedorCreateRequest, 
 )
