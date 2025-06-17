@@ -176,4 +176,3 @@ cython_debug/
 .DS_STORE
 #incluidos Carlos Daniel Spindler.
 database.db
-alembic.ini
