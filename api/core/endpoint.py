@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from api.core import dal, database
+
 from api.core.schemas import ( 
     DepositoResponse,
     SucursalResponse,
@@ -9,7 +10,6 @@ from api.core.schemas import (
 )
 
 router = APIRouter()
-
 
 async def get_db():
     async with database.AsyncSessionLocal() as session:
