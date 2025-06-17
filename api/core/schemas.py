@@ -54,25 +54,6 @@ class RemitoTransferenciaCreateRequest(BaseModel):
     id_producto: int
     id_sucursal: int """
 
-
-class ProductoCreateRequest(BaseModel):
-    nombre: str
-    descripcion: str
-    categoria: str
-    precioCompra: float
-    precioVenta: float
-
-    id_proveedor: int
-    id_stock: int
-
-class ProveedorCreateRequest(BaseModel):
-    nombre: str
-    telefono: str
-    email: str
-    direccion: str
-    id_ciudad: int
-
-
 # RESPONSE
 class RemitoCompraResponse(BaseModel):
     fecha: date
@@ -84,7 +65,6 @@ class RemitoCompraResponse(BaseModel):
     class Config:
         orm_mode = True
 
-
 class RemitoVentaRequest(BaseModel):
     fecha: date
     cantidad: int
@@ -95,7 +75,6 @@ class RemitoVentaRequest(BaseModel):
     class Config:
         orm_mode = True
 
-
 class RemitoDevolucionRequest(BaseModel):
     fecha: date
     cantidad: int
@@ -103,36 +82,12 @@ class RemitoDevolucionRequest(BaseModel):
     """producto: ProductoResponse
     sucursal: SucursalResponse"""
 
-
-class ProductoResponse(BaseModel):
-    id: int
-    nombre: str
-    descripcion: str
-    categoria: str
-    precioCompra: float
-    precioVenta: float
-
-    class Config:
-        orm_mode = True
-
-
 class RemitoTransferenciaRequest(BaseModel):
     fecha: date
     cantidad: int
     """deposito: DepositoResponse
     producto: ProductoResponse
     sucursal: SucursalResponse"""
-
-
-class ProveedorResponse(BaseModel):
-    id: int
-    nombre: str
-    telefono: str
-    email: str
-    direccion: str
-
-    class Config:
-        orm_mode = True
 
 class SucursalResponse(BaseModel):
     id: int

@@ -1,11 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from api.core import dal, database
-from api.core.schemas import (
-    ProductoResponse, 
-    ProductoCreateRequest, 
-    ProveedorResponse, 
-    ProveedorCreateRequest, 
+from api.core.schemas import ( 
     DepositoResponse,
     SucursalResponse,
     SucursalCreateRequest,
@@ -18,23 +14,6 @@ router = APIRouter()
 async def get_db():
     async with database.AsyncSessionLocal() as session:
         yield session
-
-
-@router.get("/producto/", response_model= list[ProductoResponse])
-async def listar(db: AsyncSession = Depends(get_db)):
-    return await dal.obtener_productos(db)
-
-@router.post("/producto/", response_model= ProductoResponse)
-async def crear_producto(producto: ProductoCreateRequest, db: AsyncSession = Depends(get_db)):
-    return await dal.crear_producto(db, producto)
-
-@router.get("/proveedor/", response_model= list[ProveedorResponse])
-async def listar(db: AsyncSession = Depends(get_db)):
-    return await dal.obtener_proveedores(db)
-
-@router.post("/proveedor/", response_model= ProveedorResponse)
-async def crear_proveedor(proveedor: ProveedorCreateRequest, db: AsyncSession = Depends(get_db)):
-    return await dal.crear_proveedor(db, proveedor)
 
 @router.get("/sucursal/", response_model = list[SucursalResponse])
 async def listar(db: AsyncSession = Depends(get_db)):
