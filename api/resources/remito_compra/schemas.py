@@ -1,8 +1,8 @@
 from datetime import date
 from pydantic import BaseModel
-#from ...resource.proveedor.schemas import ProveedorResponse
-#from ...resource.producto.schemas import ProductoResponse
-#from ...resource.deposito.schemas import DepositoResponse
+#from ...resources.proveedor.schemas import ProveedorResponse
+#from ...resources.producto.schemas import ProductoResponse
+#from ...resources.deposito.schemas import DepositoResponse
 
 class RemitoCompraCreateRequest(BaseModel):
     fecha : date

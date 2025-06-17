@@ -9,10 +9,10 @@ from api.core.config import settings
 from api.core import models
 from api.core.database import engine, Base
 
-from .resource.remito_devolucion.endpionts import router as remito_devolucion_router
-from .resource.remito_compra.endpoints import router as remito_compra_router
-from .resource.remito_transferencia import router as remito_transferencia_router
-from . resource.remito_venta import router as remito_venta_router
+from .resources.remito_devolucion.endpionts import router as remito_devolucion_router
+from .resources.remito_compra.endpoints import router as remito_compra_router
+from .resources.remito_transferencia import router as remito_transferencia_router
+from . resources.remito_venta import router as remito_venta_router
 
 
 app = FastAPI(

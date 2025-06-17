@@ -1,8 +1,8 @@
 from datetime import date
 from pydantic import BaseModel
-#from ...resource.cliente.schemas import ClienteResponse
-#from ...resource.producto.schemas import ProductoResponse
-#from ...resource.sucursal.schemas import ScursalResponse
+#from ...resources.cliente.schemas import ClienteResponse
+#from ...resources.producto.schemas import ProductoResponse
+#from ...resources.sucursal.schemas import ScursalResponse
 
 
 class RemitoDevolucionCreateRequest(BaseModel):
