@@ -9,6 +9,8 @@ from .resources.remito_devolucion.endpoints import router as remito_devolucion_r
 from .resources.remito_compra.endpoints import router as remito_compra_router
 from .resources.remito_transferencia import router as remito_transferencia_router
 from .resources.remito_venta import router as remito_venta_router
+from .resources.deposito import router as deposito_router
+from .resources.sucursal import router as sucursal_router
 
 from api.core.config import settings
 from api.core import models
@@ -43,4 +45,6 @@ app.include_router(remito_devolucion_router, prefix=f"{prefix_base}/remito_devol
 app.include_router(remito_compra_router, prefix=f"{prefix_base}/remito_compra")
 app.include_router(remito_transferencia_router, prefix=f"{prefix_base}/remito_transferencia")
 app.include_router(remito_venta_router, prefix=f"{prefix_base}/remito_venta")
+app.include_router(deposito_router, prefix=f"{prefix_base}/deposito")
+app.include_router(sucursal_router, prefix=f"{prefix_base}/sucursal")
 
