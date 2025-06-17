@@ -8,7 +8,7 @@ from .schemas import (
 from ...deposito.schemas import DepositoResponse
 from ...producto.schemas import ProductoResponse
 from ...sucursal.schemas import SucursalResponse
-from api.core.models import Cliente, Ciudad, Provincia, Pais, Stock, Sucursal, Deposito, Producto, Proveedor, RemitoCompra, RemitoVenta, RemitoDevolucion, RemitoTransferencia
+from api.core.models import RemitoTransferencia
 
 
 async def create_remito_transferencia(db: AsyncSession, remito_data: RemitoTransferenciaCreateRequest):
