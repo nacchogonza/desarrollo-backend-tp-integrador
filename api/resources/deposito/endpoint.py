@@ -15,8 +15,8 @@ async def get_db():
 
 @router.get("/deposito/", response_model = list[DepositoResponse])
 async def listar(db: AsyncSession = Depends(get_db)):
-    return await dal.obtener_depositos(db)
+    return await dal.obtener_deposito(db)
 
 @router.post("/deposito/", response_model = DepositoResponse)
 async def crear_deposito(deposito: DepositoCreateRequest, db: AsyncSession = Depends(get_db)):
-    return await dal.crear_depostio(db, deposito)
+    return await dal.crear_deposito(db, deposito)

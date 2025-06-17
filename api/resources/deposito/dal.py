@@ -6,12 +6,12 @@ from api.core.schemas import (
 )
 from api.core.models import Deposito
 
-async def obtener_depositos(db: AsyncSession):
+async def obtener_deposito(db: AsyncSession):
     result = await db.execute(select(Deposito).options(selectinload(Deposito.ciudad)))
     return result.scalars().all()
 
 
-async def crear_depostio(db: AsyncSession, deposito: DepositoCreateRequest):
+async def crear_deposito(db: AsyncSession, deposito: DepositoCreateRequest):
     nuevo_deposito = Deposito(**deposito.dict())
     db.add(nuevo_deposito)
     await db.commit()
