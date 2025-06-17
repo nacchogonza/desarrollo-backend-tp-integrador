@@ -14,6 +14,7 @@ logger.info(f"Usando URL de base de datos: {DATABASE_URL}")
 engine = create_async_engine(DATABASE_URL, echo=True)
 
 Base = declarative_base()
+target_metadata = Base.metadata
 
 AsyncSessionLocal = sessionmaker(
     autocommit=False,
