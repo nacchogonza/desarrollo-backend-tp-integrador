@@ -3,11 +3,7 @@ from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from .schemas import (
     RemitoVentaCreateRequest,
-    RemitoVentaResponse,
 )
-from ...cliente.schemas import ClienteResponse
-from ...producto.schemas import ProductoResponse
-from ...sucursal.schemas import SucursalResponse
 from api.core.models import RemitoVenta
 
 async def create_remito_venta(db: AsyncSession, remito_data: RemitoVentaCreateRequest):

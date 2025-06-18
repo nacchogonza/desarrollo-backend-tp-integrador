@@ -5,8 +5,8 @@ import api.resources.location.endpoint
 import api.resources.stock.endpoint
 import api.resources.producto.endpoint
 import api.resources.proveedor.endpoint
-from .resources.remito_compra.endpoints import router as remito_compra_router
-from .resources.remito_devolucion.endpoints import router as remito_devolucion_router
+from .resources.remito_compra.endpoint import router as remito_compra_router
+from .resources.remito_devolucion.endpoint import router as remito_devolucion_router
 from .resources.remito_transferencia import router as remito_transferencia_router
 from .resources.remito_venta import router as remito_venta_router
 from .resources.deposito import router as deposito_router

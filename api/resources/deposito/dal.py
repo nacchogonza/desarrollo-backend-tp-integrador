@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
-from api.core.schemas import (
+from .schemas import (
     DepositoCreateRequest
 )
 from api.core.models import Deposito

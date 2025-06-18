@@ -15,8 +15,8 @@ class RemitoDevolucionCreateRequest(BaseModel):
 class RemitoDevolucionResponse(BaseModel):
     fecha: date
     cantidad: int
-    cliente: ClienteResponse
-    """producto: ProductoResponse
+    """cliente: ClienteResponse
+    producto: ProductoResponse
     sucursal: SucursalResponse"""
 
     class Config:

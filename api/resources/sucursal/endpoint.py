@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from api.resources import dal, database
+from api.resources.sucursal import dal
+from api.core import database
 from api.resources.sucursal.schemas import (
     SucursalResponse, 
     SucursalCreateRequest,
