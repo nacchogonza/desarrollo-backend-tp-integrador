@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from api.resources import dal, database
+from api.core import database
+from api.resources.deposito import dal
 from api.resources.deposito.schemas import (
     DepositoResponse,
     DepositoCreateRequest

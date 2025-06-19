@@ -3,11 +3,7 @@ from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from .schemas import (
     RemitoTransferenciaCreateRequest,
-    RemitoTransferenciaResponse,
 )
-from ...deposito.schemas import DepositoResponse
-from ...producto.schemas import ProductoResponse
-from ...sucursal.schemas import SucursalResponse
 from api.core.models import RemitoTransferencia
 
 

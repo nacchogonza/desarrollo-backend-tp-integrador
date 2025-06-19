@@ -1,13 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from sqlalchemy.orm import selectinload
 from .schemas import (
     RemitoCompraCreateRequest,
-    RemitoCompraResponse,
 )
-from ...proveedor.schemas import ProveedorResponse
-from ...producto.schemas import ProductoResponse
-from ...deposito.schemas import DepositoResponse
 from api.core.models import RemitoCompra
 
 async def create_remito_compra(db: AsyncSession, remito_data: RemitoCompraCreateRequest):
