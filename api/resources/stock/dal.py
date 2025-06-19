@@ -8,15 +8,13 @@ from api.core.models import Stock
 
 
 async def obtener_stocks(db: AsyncSession):
-    """result = await db.execute(
+    result = await db.execute(
         select(Stock).options(
             selectinload(Stock.producto)
             .selectinload(Stock.deposito)
             .selectinload(Stock.sucursal)
         )
-    )"""
-    # TODO: Descomentar y vincular Producto, Deposito y Stock
-    result = await db.execute(select(Stock))
+    )
     return result.scalars().all()
 
 
@@ -25,18 +23,13 @@ async def crear_stock(db: AsyncSession, stock: StockCreateRequest):
     db.add(nuevo_stock)
     await db.commit()
     await db.refresh(nuevo_stock)
-    """ result = await db.execute(
+    result = await db.execute(
         select(Stock)
         .options(
             selectinload(Stock.producto)
             .selectinload(Stock.deposito)
             .selectinload(Stock.sucursal)
         )
-        .where(Stock.id == nuevo_stock.id)
-    ) """
-    # TODO: Descomentar y vincular Producto, Deposito y Stock
-    result = await db.execute(
-        select(Stock)
         .where(Stock.id == nuevo_stock.id)
     )
     stock_con_relacion = result.scalar_one()

@@ -1,8 +1,8 @@
 from datetime import date
 from pydantic import BaseModel
-#from ...resources.cliente.schemas import ClienteResponse
-#from ...resources.producto.schemas import ProductoResponse
-#from ...resources.sucursal.schemas import SucursalResponse
+from ...resources.cliente.schemas import ClienteResponse
+from ...resources.producto.schemas import ProductoResponse
+from ...resources.sucursal.schemas import SucursalResponse
 
 
 class RemitoVentaCreateRequest(BaseModel):
@@ -15,9 +15,9 @@ class RemitoVentaCreateRequest(BaseModel):
 class RemitoVentaResponse(BaseModel):
     fecha: date
     cantidad: int
-    """cliente: ClienteResponse
+    cliente: ClienteResponse
     producto: ProductoResponse
-    sucursal: SucursalResponse"""
+    sucursal: SucursalResponse
 
     class Config:
         from_attributes = True

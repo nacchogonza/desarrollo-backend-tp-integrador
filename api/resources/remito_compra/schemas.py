@@ -1,8 +1,8 @@
 from datetime import date
 from pydantic import BaseModel
-#from ...resources.proveedor.schemas import ProveedorResponse
-#from ...resources.producto.schemas import ProductoResponse
-#from ...resources.deposito.schemas import DepositoResponse
+from ...resources.proveedor.schemas import ProveedorResponse
+from ...resources.producto.schemas import ProductoResponse
+from ...resources.deposito.schemas import DepositoResponse
 
 class RemitoCompraCreateRequest(BaseModel):
     fecha : date
@@ -14,9 +14,9 @@ class RemitoCompraCreateRequest(BaseModel):
 class RemitoCompraResponse(BaseModel):
     fecha: date
     cantidad: int
-    """proveedor: ProveedorResponse
+    proveedor: ProveedorResponse
     producto: ProductoResponse
-    deposito: DepositoResponse"""
+    deposito: DepositoResponse
 
     class Config:
         from_attributes = True

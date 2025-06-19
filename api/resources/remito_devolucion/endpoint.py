@@ -35,7 +35,7 @@ async def get_all_remitos_devolucion_endpoint(
     limit: int = 100,
     db: AsyncSession = Depends(get_db)
 ):
-    remitos = await remito_devolucion_dal.get_all_remito_devolucion(db, skip=skip, limit=limit)
+    remitos = await remito_devolucion_dal.get_all_remitos_devolucion(db, skip=skip, limit=limit)
     return remitos
 
 @router.put("/{remito_id}", response_model=RemitoDevolucionResponse)

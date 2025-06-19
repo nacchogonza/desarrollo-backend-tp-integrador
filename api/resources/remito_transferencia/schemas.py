@@ -1,8 +1,8 @@
 from datetime import date
 from pydantic import BaseModel
-#from ...resources.deposito.schemas import DespositoResponse
-#from ...resources.producto.schemas import ProductoResponse
-#from ...resources.sucursal.schemas import SucursalResponse
+from ...resources.deposito.schemas import DepositoResponse
+from ...resources.producto.schemas import ProductoResponse
+from ...resources.sucursal.schemas import SucursalResponse
 
 class RemitoTransferenciaCreateRequest(BaseModel):
     fecha : date
@@ -14,9 +14,9 @@ class RemitoTransferenciaCreateRequest(BaseModel):
 class RemitoTransferenciaResponse(BaseModel):
     fecha: date
     cantidad: int
-    """deposito: DepositoResponse
+    deposito: DepositoResponse
     producto: ProductoResponse
-    sucursal: SucursalResponse"""
+    sucursal: SucursalResponse
     
     class Config:
        from_attributes = True
