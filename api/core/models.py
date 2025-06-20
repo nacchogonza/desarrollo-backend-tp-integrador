@@ -181,7 +181,7 @@ class Deposito(Base):
     __tablename__= "deposito"
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, primary_key=False, nullable=False)
-    telefono = Column(Integer, primary_key=False, nullable=False)
+    telefono = Column(String, primary_key=False, nullable=False)
     email = Column(String, primary_key=False, nullable=False)
     direccion = Column(String, primary_key=False, nullable=False)
     id_ciudad = Column(Integer, ForeignKey("ciudad.id"))
