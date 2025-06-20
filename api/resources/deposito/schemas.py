@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 class DepositoCreateRequest(BaseModel):
     nombre: str
-    telefono: int
+    telefono: str
     email: str
     direccion: str
     id_ciudad: int
