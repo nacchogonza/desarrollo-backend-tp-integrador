@@ -36,15 +36,6 @@ async def obtener_stocks(db: AsyncSession):
     
     
 async def crear_stock(db: AsyncSession, stock: StockCreateRequest):
-    existing_stock = await db.execute(
-        select(Stock).where(Stock.id_producto == stock.id_producto)
-    )
-    if existing_stock.scalar_one_or_none():
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Ya existe un registro de stock para el Producto con ID {stock.id_producto}. Si deseas modificarlo, usa el endpoint de actualización."
-        )
-
     nuevo_stock = Stock(**stock.model_dump())
     db.add(nuevo_stock)
     await db.commit()
