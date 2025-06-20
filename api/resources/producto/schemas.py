@@ -9,7 +9,6 @@ class ProductoCreateRequest(BaseModel):
     precioVenta: float
 
     id_proveedor: int
-    id_stock: int
 
 #Response
 class ProductoResponse(BaseModel):
