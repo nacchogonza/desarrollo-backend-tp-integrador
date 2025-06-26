@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from ..location.schemas import CiudadResponse
 
 #Request
 class ProveedorCreateRequest(BaseModel):
@@ -15,6 +16,7 @@ class ProveedorResponse(BaseModel):
     telefono: str
     email: str
     direccion: str
+    ciudad: CiudadResponse
 
     class Config:
         orm_mode = True

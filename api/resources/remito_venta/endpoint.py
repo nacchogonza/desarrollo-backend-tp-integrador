@@ -15,7 +15,6 @@ from . import dal as remito_venta_dal
 
 
 router = APIRouter(
-    prefix="/remitos-venta",
     tags=["Remitos Venta"],
     responses={404: {"description": "Remito de Venta no encontrado"}},
 )

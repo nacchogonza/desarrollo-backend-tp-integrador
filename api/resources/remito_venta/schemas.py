@@ -13,6 +13,7 @@ class RemitoVentaCreateRequest(BaseModel):
     id_sucursal : int
 
 class RemitoVentaResponse(BaseModel):
+    id: int
     fecha: date
     cantidad: int
     cliente: ClienteResponse

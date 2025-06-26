@@ -1,13 +1,17 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
-from api.resources.producto.schemas import (
-   ProductoCreateRequest
+from api.resources.producto.schemas import (ProductoCreateRequest
 )
-from api.core.models import Producto
+from api.core.models import Producto, Proveedor, Ciudad, Provincia
 
 async def obtener_productos(db: AsyncSession):
-	result = await db.execute(select(Producto))
+	result = await db.execute(select(Producto).options(
+            selectinload(Producto.proveedor)
+            .selectinload(Proveedor.ciudad)
+            .selectinload(Ciudad.provincia)
+            .selectinload(Provincia.pais)
+        ))
 	return result.scalars().all()
 
 async def crear_producto(db: AsyncSession, producto: ProductoCreateRequest):
@@ -15,4 +19,18 @@ async def crear_producto(db: AsyncSession, producto: ProductoCreateRequest):
 	db.add(nuevo_producto)
 	await db.commit()
 	await db.refresh(nuevo_producto)
-	return nuevo_producto
+	result = await db.execute(
+        select(Producto)
+        .options(
+            selectinload(Producto.proveedor)
+            .selectinload(Proveedor.ciudad)
+            .selectinload(Ciudad.provincia)
+            .selectinload(Provincia.pais)
+        )
+        .where(Producto.id == nuevo_producto.id)
+    )
+
+
+	producto = result.scalar_one()
+    
+	return producto
