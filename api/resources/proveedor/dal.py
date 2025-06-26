@@ -30,4 +30,15 @@ async def crear_proveedor(db: AsyncSession, proveedor: ProveedorCreateRequest):
     db.add(nuevo_proveedor)
     await db.commit()
     await db.refresh(nuevo_proveedor)
-    return nuevo_proveedor
+    
+    result = await db.execute(
+        select(Proveedor)
+        .options(
+            selectinload(Proveedor.ciudad)
+            .selectinload(Ciudad.provincia)
+            .selectinload(Provincia.pais)
+        )
+        .where(Proveedor.id == nuevo_proveedor.id)
+    )
+    proveedor_con_relacion = result.scalar_one()
+    return proveedor_con_relacion
