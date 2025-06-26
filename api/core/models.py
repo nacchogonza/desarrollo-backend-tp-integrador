@@ -13,18 +13,26 @@ class Cliente(Base):
     direccion = Column(String, primary_key=False, nullable=False)
     id_ciudad = Column(Integer, ForeignKey("ciudad.id"))
 
-    ciudad = relationship("Ciudad", back_populates="cliente", uselist=False)
+    ciudad = relationship("Ciudad", back_populates="cliente")
     remito_devolucion = relationship(
-        "RemitoDevolucion", back_populates="cliente", uselist=False
+        "RemitoDevolucion", back_populates="cliente", 
     )
-    
     remito_venta = relationship(
+        "RemitoVenta", back_populates="cliente", 
+    )
+    """ remito_venta = relationship(
         "RemitoVenta",
         back_populates="cliente",
-        uselist=False,
         primaryjoin="Cliente.id == RemitoVenta.id_cliente",
         foreign_keys="[RemitoVenta.id_cliente]",
-    )
+    ) """
+    
+    """ remito_venta = relationship(
+        "RemitoVenta",
+        back_populates="cliente",
+        primaryjoin="Cliente.id == RemitoVenta.id_cliente",
+        foreign_keys="[RemitoVenta.id_cliente]",
+    ) """
 
 
 class Ciudad(Base):
@@ -33,11 +41,11 @@ class Ciudad(Base):
     nombre = Column(String, primary_key=False, nullable=False)
     id_provincia = Column(Integer, ForeignKey("provincia.id"))
 
-    cliente = relationship("Cliente", back_populates="ciudad", uselist=False)
-    provincia = relationship("Provincia", back_populates="ciudad", uselist=False)
-    proveedor = relationship("Proveedor", back_populates="ciudad", uselist=False)
-    sucursal = relationship("Sucursal", back_populates="ciudad", uselist=False)
-    deposito = relationship("Deposito", back_populates="ciudad", uselist=False)
+    cliente = relationship("Cliente", back_populates="ciudad")
+    provincia = relationship("Provincia", back_populates="ciudad")
+    proveedor = relationship("Proveedor", back_populates="ciudad")
+    sucursal = relationship("Sucursal", back_populates="ciudad")
+    deposito = relationship("Deposito", back_populates="ciudad")
 
 
 class Provincia(Base):
@@ -46,8 +54,8 @@ class Provincia(Base):
     nombre = Column(String, primary_key=False, nullable=False)
     id_pais = Column(Integer, ForeignKey("pais.id"))
 
-    ciudad = relationship("Ciudad", back_populates="provincia", uselist=False)
-    pais = relationship("Pais", back_populates="provincia", uselist=False)
+    ciudad = relationship("Ciudad", back_populates="provincia")
+    pais = relationship("Pais", back_populates="provincia")
 
 
 class Pais(Base):
@@ -55,7 +63,7 @@ class Pais(Base):
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, primary_key=False, nullable=False)
 
-    provincia = relationship("Provincia", back_populates="pais", uselist=False)
+    provincia = relationship("Provincia", back_populates="pais")
 
 
 class RemitoCompra(Base):
@@ -67,9 +75,9 @@ class RemitoCompra(Base):
     id_producto = Column(Integer, ForeignKey("producto.id"))
     id_deposito = Column(Integer, ForeignKey("deposito.id"))
 
-    proveedor = relationship("Proveedor", back_populates="remito_compra", uselist=True)
-    producto = relationship("Producto", back_populates="remito_compra", uselist=False)
-    deposito = relationship("Deposito", back_populates="remito_compra", uselist=True)
+    proveedor = relationship("Proveedor", back_populates="remito_compra")
+    producto = relationship("Producto", back_populates="remito_compra")
+    deposito = relationship("Deposito", back_populates="remito_compra")
 
 
 class RemitoVenta(Base):
@@ -81,10 +89,15 @@ class RemitoVenta(Base):
     id_producto = Column(Integer, ForeignKey("producto.id"))
     id_sucursal = Column(Integer, ForeignKey("sucursal.id"))
     
-    cliente = relationship(
+    cliente = relationship("Cliente", back_populates="remito_venta")
+    producto = relationship("Producto", back_populates="remito_venta")
+    sucursal = relationship("Sucursal", back_populates="remito_venta")
+    
+    
+    
+    """ cliente = relationship(
         "Cliente",
         back_populates="remito_venta",
-        uselist=False,
         primaryjoin="RemitoVenta.id_cliente == Cliente.id",
         foreign_keys="[RemitoVenta.id_cliente]",
     )
@@ -92,7 +105,6 @@ class RemitoVenta(Base):
     producto = relationship(
         "Producto",
         back_populates="remito_venta",
-        uselist=False,
         primaryjoin="RemitoVenta.id_producto == Producto.id",
         foreign_keys="[RemitoVenta.id_producto]",
     )
@@ -100,10 +112,9 @@ class RemitoVenta(Base):
     sucursal = relationship(
         "Sucursal",
         back_populates="remito_venta",
-        uselist=False,
         primaryjoin="RemitoVenta.id_sucursal == Sucursal.id",
         foreign_keys="[RemitoVenta.id_sucursal]",
-    )
+    ) """
 
 
 class RemitoDevolucion(Base):
@@ -115,12 +126,12 @@ class RemitoDevolucion(Base):
     id_producto = Column(Integer, ForeignKey("producto.id"))
     id_sucursal = Column(Integer, ForeignKey("sucursal.id"))
 
-    cliente = relationship("Cliente", back_populates="remito_devolucion", uselist=True)
+    cliente = relationship("Cliente", back_populates="remito_devolucion")
     producto = relationship(
-        "Producto", back_populates="remito_devolucion", uselist=False
+        "Producto", back_populates="remito_devolucion", 
     )
     sucursal = relationship(
-        "Sucursal", back_populates="remito_devolucion", uselist=True
+        "Sucursal", back_populates="remito_devolucion"
     )
 
 
@@ -136,13 +147,13 @@ class RemitoTransferencia(Base):
     id_sucursal = Column(Integer, ForeignKey("sucursal.id"))
 
     deposito = relationship(
-        "Deposito", back_populates="remito_transferencia", uselist=True
+        "Deposito", back_populates="remito_transferencia"
     )
     producto = relationship(
-        "Producto", back_populates="remito_transferencia", uselist=True
+        "Producto", back_populates="remito_transferencia"
     )
     sucursal = relationship(
-        "Sucursal", back_populates="remito_transferencia", uselist=True
+        "Sucursal", back_populates="remito_transferencia"
     )
 
 
@@ -163,12 +174,13 @@ class Producto(Base):
     )
     remito_devolucion = relationship("RemitoDevolucion", back_populates="producto")
 
-    proveedor = relationship("Proveedor", back_populates="producto", uselist=False)
+    proveedor = relationship("Proveedor", back_populates="producto")
+    stock = relationship("Stock", back_populates="producto")
+    remito_venta = relationship("RemitoVenta", back_populates="producto")
 
-    stock = relationship(
+    """ stock = relationship(
         "Stock",
         back_populates="producto",
-        uselist=False,
         primaryjoin="Producto.id == Stock.id_producto",
         foreign_keys="[Stock.id_producto]",
     )
@@ -176,10 +188,9 @@ class Producto(Base):
     remito_venta = relationship(
         "RemitoVenta",
         back_populates="producto",
-        uselist=False,
         primaryjoin="Producto.id == RemitoVenta.id_producto",
         foreign_keys="[RemitoVenta.id_producto]",
-    )
+    ) """
 
 
 class Proveedor(Base):
@@ -193,7 +204,7 @@ class Proveedor(Base):
     id_ciudad = Column(Integer, ForeignKey("ciudad.id"))
 
     remito_compra = relationship("RemitoCompra", back_populates="proveedor")
-    ciudad = relationship("Ciudad", back_populates="proveedor", uselist=False)
+    ciudad = relationship("Ciudad", back_populates="proveedor")
     producto = relationship("Producto", back_populates="proveedor")
 
 
@@ -212,17 +223,17 @@ class Stock(Base):
         ForeignKey("producto.id"),
     )
 
-    deposito = relationship("Deposito", back_populates="stock", uselist=False)
+    deposito = relationship("Deposito", back_populates="stock")
 
-    sucursal = relationship("Sucursal", back_populates="stock", uselist=False)
+    sucursal = relationship("Sucursal", back_populates="stock")
+    producto = relationship("Producto", back_populates="stock")
 
-    producto = relationship(
+    """ producto = relationship(
         "Producto",
         back_populates="stock",
-        uselist=False,
         primaryjoin="Stock.id_producto == Producto.id",
         foreign_keys="[Stock.id_producto]",
-    )
+    ) """
 
 
 class Sucursal(Base):
@@ -234,22 +245,22 @@ class Sucursal(Base):
     direccion = Column(String, primary_key=False, nullable=False)
     id_ciudad = Column(Integer, ForeignKey("ciudad.id"))
 
-    ciudad = relationship("Ciudad", back_populates="sucursal", uselist=False)
+    ciudad = relationship("Ciudad", back_populates="sucursal")
     remito_devolucion = relationship(
-        "RemitoDevolucion", back_populates="sucursal", uselist=False
+        "RemitoDevolucion", back_populates="sucursal", 
     )
     remito_transferencia = relationship(
-        "RemitoTransferencia", back_populates="sucursal", uselist=False
+        "RemitoTransferencia", back_populates="sucursal", 
     )
-    stock = relationship("Stock", back_populates="sucursal", uselist=False)
+    stock = relationship("Stock", back_populates="sucursal")
+    remito_venta = relationship("RemitoVenta", back_populates="sucursal")
     
-    remito_venta = relationship(
+    """ remito_venta = relationship(
         "RemitoVenta",
         back_populates="sucursal",
-        uselist=False,
         primaryjoin="Sucursal.id == RemitoVenta.id_sucursal",
         foreign_keys="[RemitoVenta.id_sucursal]",
-    )
+    ) """
 
 
 class Deposito(Base):
@@ -261,11 +272,11 @@ class Deposito(Base):
     direccion = Column(String, primary_key=False, nullable=False)
     id_ciudad = Column(Integer, ForeignKey("ciudad.id"))
 
-    ciudad = relationship("Ciudad", back_populates="deposito", uselist=False)
+    ciudad = relationship("Ciudad", back_populates="deposito")
     remito_compra = relationship(
-        "RemitoCompra", back_populates="deposito", uselist=False
+        "RemitoCompra", back_populates="deposito", 
     )
     remito_transferencia = relationship(
-        "RemitoTransferencia", back_populates="deposito", uselist=False
+        "RemitoTransferencia", back_populates="deposito", 
     )
-    stock = relationship("Stock", back_populates="deposito", uselist=False)
+    stock = relationship("Stock", back_populates="deposito")
