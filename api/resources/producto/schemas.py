@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from ..proveedor.schemas import ProveedorResponse
 
 #Request
 class ProductoCreateRequest(BaseModel):
@@ -7,7 +8,6 @@ class ProductoCreateRequest(BaseModel):
     categoria: str
     precioCompra: float
     precioVenta: float
-
     id_proveedor: int
 
 #Response
@@ -18,6 +18,7 @@ class ProductoResponse(BaseModel):
     categoria: str
     precioCompra: float
     precioVenta: float
+    proveedor: ProveedorResponse
 
     class Config:
         orm_mode = True
