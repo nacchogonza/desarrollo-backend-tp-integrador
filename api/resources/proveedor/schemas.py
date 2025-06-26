@@ -24,10 +24,10 @@ class ProveedorResponse(BaseModel):
 #PARA LA FUNCIONALIDAD DE REPORTE DE PROVEEDORES (SEGUN CHATGPT):
 
 class ProductoReporte(BaseModel):  #(Deberia estar en producto/schemas.py?)
-    id:int                          #representa los productos dentro del reporte, incluyendo el precio.
-    nombre:str
-    descripcion:str
-    categoria:str
+    id: int                          #representa los productos dentro del reporte, incluyendo el precio.
+    nombre: str
+    descripcion: str
+    categoria: str
     precioCompra: float
     precioVenta: float
 
