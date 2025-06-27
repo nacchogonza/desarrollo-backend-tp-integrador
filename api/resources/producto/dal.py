@@ -34,3 +34,18 @@ async def crear_producto(db: AsyncSession, producto: ProductoCreateRequest):
 	producto = result.scalar_one()
     
 	return producto
+
+async def reporte_proveedores(db: AsyncSession, id_proveedor: int):
+    result = await db.execute(
+        select(Producto)
+        .options(
+            selectinload(Producto.proveedor) 
+            .selectinload(Proveedor.ciudad)
+            .selectinload(Ciudad.provincia)
+            .selectinload(Provincia.pais)
+        
+        )
+        .where(Producto.id_proveedor == id_proveedor)
+    )
+    Proveedores = result.scalars().all()
+    return Proveedores
