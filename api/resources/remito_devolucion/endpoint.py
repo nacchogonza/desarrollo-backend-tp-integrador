@@ -4,11 +4,11 @@ from typing import List
 from ...core.database import get_db
 from .schemas import RemitoDevolucionCreateRequest, RemitoDevolucionResponse
 from . import dal as remito_devolucion_dal
+from ..auth.dal import get_current_active_user
 
 router=APIRouter(
-    prefix="/remito_devolucion",
-    tags=["Remito Devolucion"],
-    responses={404: {"description":"Remito de devolución no encontrado"}}
+    responses={404: {"description":"Remito de devolución no encontrado"}},
+    dependencies=[Depends(get_current_active_user)],
 )
 
 @router.post("/", response_model=RemitoDevolucionResponse, status_code=status.HTTP_201_CREATED)

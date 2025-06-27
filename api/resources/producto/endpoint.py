@@ -8,7 +8,11 @@ from api.resources.producto.schemas import (
     ProductoCreateRequest,
     )
 
-router = APIRouter()
+from ..auth.dal import get_current_active_user
+
+router = APIRouter(
+    dependencies=[Depends(get_current_active_user)],
+)
 
 
 @router.get("/", response_model= list[ProductoResponse])

@@ -47,8 +47,8 @@ app.include_router(api.resources.producto.endpoint.router, prefix=f"{prefix_base
 app.include_router(api.resources.proveedor.endpoint.router, prefix=f"{prefix_base}/proveedor", tags=["Proveedor"])
 app.include_router(deposito_router, prefix=f"{prefix_base}/deposito", tags=["Deposito"])
 app.include_router(sucursal_router, prefix=f"{prefix_base}/sucursal", tags=["Sucursal"])
-app.include_router(remito_devolucion_router, prefix=f"{prefix_base}/remito_devolucion")
-app.include_router(remito_compra_router, prefix=f"{prefix_base}/remito_compra")
-app.include_router(remito_transferencia_router, prefix=f"{prefix_base}/remito_transferencia")
-app.include_router(remito_venta_router, prefix=f"{prefix_base}/remito_venta")
+app.include_router(remito_devolucion_router, prefix=f"{prefix_base}/remito_devolucion", tags=["Remito Devolucion"])
+app.include_router(remito_compra_router, prefix=f"{prefix_base}/remito_compra", tags=["Remito Compra"])
+app.include_router(remito_transferencia_router, prefix=f"{prefix_base}/remito_transferencia", tags=["Remito Transferencia"])
+app.include_router(remito_venta_router, prefix=f"{prefix_base}/remito_venta", tags=["Remito Venta"])
 
