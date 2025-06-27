@@ -24,7 +24,7 @@ app = FastAPI(
     description="API para la gestion de stocks",
     version="0.0.1"
 )
-
+""""
 
 async def create_db_tables():
     async with engine.begin() as conn:
@@ -35,7 +35,7 @@ async def startup_event():
     print("Iniciando creación/verificación de tablas de base de datos...")
     await create_db_tables()
     print("Tablas de base de datos creadas (o verificadas) correctamente.")
-
+"""
  
 
 prefix_base = "/api/v1"
