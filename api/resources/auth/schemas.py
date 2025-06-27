@@ -12,7 +12,6 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     disabled: bool = False
-    # Para Pydantic V2
     model_config = ConfigDict(from_attributes=True)
 
 class Token(BaseModel):
