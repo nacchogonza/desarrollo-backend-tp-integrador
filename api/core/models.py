@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, VARCHAR, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, VARCHAR, Float, Boolean, DateTime
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 from api.core.database import Base
 
@@ -280,3 +281,19 @@ class Deposito(Base):
         "RemitoTransferencia", back_populates="deposito", 
     )
     stock = relationship("Stock", back_populates="deposito")
+    
+class DBUser(Base):
+    __tablename__ = "users" # Nombre de la tabla en la base de datos
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=True)
+    full_name = Column(String, nullable=True)
+    hashed_password = Column(String) # Aquí se guardará la contraseña hasheada
+    disabled = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=func.now()) # Fecha de creación
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now()) # Fecha de última actualización
+
+    # Puedes añadir un método __repr__ para una representación más legible en el debugger
+    def __repr__(self):
+        return f"<DBUser(username='{self.username}', email='{self.email}')>"
