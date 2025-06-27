@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ...resources.sucursal.schemas import SucursalResponse
 from ...resources.deposito.schemas import DepositoResponse
@@ -19,5 +19,4 @@ class StockResponse(BaseModel):
     sucursal: SucursalResponse
     producto: ProductoResponse
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

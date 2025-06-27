@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 # REQUEST
 class PaisCreateRequest(BaseModel):
@@ -20,8 +20,7 @@ class PaisResponse(BaseModel):
     id: int
     nombre: str
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ProvinciaResponse(BaseModel):
@@ -29,8 +28,7 @@ class ProvinciaResponse(BaseModel):
     nombre: str
     pais: PaisResponse
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class CiudadResponse(BaseModel):
@@ -38,5 +36,4 @@ class CiudadResponse(BaseModel):
     nombre: str
     provincia: ProvinciaResponse
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
