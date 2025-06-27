@@ -176,3 +176,16 @@ cython_debug/
 .DS_STORE
 #incluidos Carlos Daniel Spindler.
 database.db
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environments
+env/
+venv/
+
+# Database
+*.db
+*.sqlite3
