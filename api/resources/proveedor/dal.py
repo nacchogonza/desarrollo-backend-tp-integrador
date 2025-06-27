@@ -43,17 +43,5 @@ async def crear_proveedor(db: AsyncSession, proveedor: ProveedorCreateRequest):
     proveedor_con_relacion = result.scalar_one()
     return proveedor_con_relacion
 
-#FUNCIONALIDAD REPORTE DE PROVEEDORES
 
-async def reporte_proveedores(db: AsyncSession):
-    result = await db.execute(
-        select(Proveedor)
-        .options(
-            selectinload(Proveedor.ciudad)
-            .selectinload(Ciudad.provincia)
-            .selectinload(Provincia.pais),
-            selectinload(Proveedor.producto)
-        )
-    )
-    Proveedores = result.scalars().all()
-    return Proveedores
+

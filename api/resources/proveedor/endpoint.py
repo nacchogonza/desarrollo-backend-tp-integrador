@@ -5,7 +5,6 @@ from api.core import database
 from api.resources.proveedor.schemas import (
     ProveedorResponse, 
     ProveedorCreateRequest,
-    ProveedorReporte 
 )
 
 router = APIRouter()
@@ -24,7 +23,3 @@ async def crear_proveedor(proveedor: ProveedorCreateRequest, db: AsyncSession = 
     return await dal.crear_proveedor(db, proveedor)
 
 
-#Reporte Proveedores
-@router.get("/reporte", response_model=list[ProveedorReporte])
-async def get_reporte_proveedores(db: AsyncSession = Depends(get_db)):
-    return await dal.reporte_proveedores(db)
