@@ -44,7 +44,7 @@ async def get_ventas_report_endpoint(
     return ReporteVentasResponse(**report_data)
 
 
-@router.get("/clientes_por_ciudad", response_model=ReporteClientesPorCiudadResponse)
+@router.get("/clientes_por_ciudad/{id_ciudad}", response_model=ReporteClientesPorCiudadResponse)
 async def get_ventas_report_endpoint(
     id_ciudad: int,
     db: AsyncSession = Depends(get_db),
