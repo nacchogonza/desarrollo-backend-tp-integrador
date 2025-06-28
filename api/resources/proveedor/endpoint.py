@@ -4,7 +4,7 @@ from api.resources.proveedor import dal
 from api.core import database
 from api.resources.proveedor.schemas import (
     ProveedorResponse, 
-    ProveedorCreateRequest, 
+    ProveedorCreateRequest,
 )
 
 from ..auth.dal import get_current_active_user
@@ -25,3 +25,5 @@ async def listar(db: AsyncSession = Depends(get_db)):
 @router.post("/", response_model= ProveedorResponse)
 async def crear_proveedor(proveedor: ProveedorCreateRequest, db: AsyncSession = Depends(get_db)):
     return await dal.crear_proveedor(db, proveedor)
+
+

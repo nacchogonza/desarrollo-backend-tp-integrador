@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from api.resources.proveedor.schemas import ProveedorCreateRequest
-from api.core.models import Proveedor, Ciudad, Provincia
+from api.core.models import Proveedor, Ciudad, Provincia, Producto
 
 
 async def obtener_proveedor(db: AsyncSession):
@@ -42,3 +42,6 @@ async def crear_proveedor(db: AsyncSession, proveedor: ProveedorCreateRequest):
     )
     proveedor_con_relacion = result.scalar_one()
     return proveedor_con_relacion
+
+
+

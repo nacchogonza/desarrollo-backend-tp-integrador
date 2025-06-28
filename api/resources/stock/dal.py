@@ -82,3 +82,27 @@ async def delete_stock(db: AsyncSession, stock_id: int):
         await db.commit()
         return True
     return False
+
+async def reporte_stock_por_producto(db: AsyncSession, id_producto: int):
+    # Traigo todos los stocks para ese producto
+    result = await db.execute(
+        select(Stock)
+        .options(
+            selectinload(Stock.deposito)
+            .selectinload(Deposito.ciudad)
+            .selectinload(Ciudad.provincia)
+            .selectinload(Provincia.pais),
+            selectinload(Stock.sucursal)
+            .selectinload(Sucursal.ciudad)
+            .selectinload(Ciudad.provincia)
+            .selectinload(Provincia.pais),
+            selectinload(Stock.producto)
+            .selectinload(Producto.proveedor)   
+            .selectinload(Proveedor.ciudad)     
+            .selectinload(Ciudad.provincia)    
+            .selectinload(Provincia.pais)  
+        )
+        .where(Stock.id_producto == id_producto)
+    )
+    return result.scalars().all()
+
