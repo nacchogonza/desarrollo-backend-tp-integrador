@@ -1,7 +1,7 @@
-from fastapi import FastAPI, Depends, APIRouter, HTTPException, status
+from fastapi import Depends, APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session # Importa Session para la dependencia de DB
-from api.core.database import get_db # Importa la dependencia de sesión de DB
+from sqlalchemy.orm import Session
+from api.core.database import get_db
 
 from .dal import login_for_access_token, create_db_user, get_user_by_username
 from .schemas import Token, User, UserCreate

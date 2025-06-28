@@ -54,7 +54,7 @@ async def get_all_remitos_compra_endpoint(
 @router.put("/{remito_id}", response_model=RemitoCompraResponse)
 async def update_remito_compra_endpoint(
     remito_id: int,
-    remito_update: RemitoCompraCreateRequest,  # Puedes crear un RemitoCompraUpdateRequest si los campos actualizables son diferentes
+    remito_update: RemitoCompraCreateRequest,
     db: AsyncSession = Depends(get_db),
 ):
 
@@ -80,4 +80,4 @@ async def delete_remito_compra_endpoint(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Remito de compra no encontrado para eliminar",
         )
-    return  # FastAPI maneja el 204 No Content automáticamente
+    return

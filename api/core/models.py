@@ -283,17 +283,16 @@ class Deposito(Base):
     stock = relationship("Stock", back_populates="deposito")
     
 class DBUser(Base):
-    __tablename__ = "users" # Nombre de la tabla en la base de datos
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True, nullable=True)
     full_name = Column(String, nullable=True)
-    hashed_password = Column(String) # Aquí se guardará la contraseña hasheada
+    hashed_password = Column(String)
     disabled = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=func.now()) # Fecha de creación
-    updated_at = Column(DateTime, default=func.now(), onupdate=func.now()) # Fecha de última actualización
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
-    # Puedes añadir un método __repr__ para una representación más legible en el debugger
     def __repr__(self):
         return f"<DBUser(username='{self.username}', email='{self.email}')>"
