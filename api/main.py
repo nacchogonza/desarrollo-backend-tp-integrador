@@ -55,4 +55,4 @@ app.include_router(remito_devolucion_router, prefix=f"{prefix_base}/remito_devol
 app.include_router(remito_compra_router, prefix=f"{prefix_base}/remito_compra", tags=["Remito Compra"])
 app.include_router(remito_transferencia_router, prefix=f"{prefix_base}/remito_transferencia", tags=["Remito Transferencia"])
 app.include_router(remito_venta_router, prefix=f"{prefix_base}/remito_venta", tags=["Remito Venta"])
-app.include_router(reports_routes.router)
+app.include_router(reports_routes.router, tags=["Reportes"])
