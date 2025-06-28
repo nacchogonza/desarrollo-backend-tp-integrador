@@ -46,3 +46,24 @@ class ReporteClientesPorCiudadResponse(BaseModel):
     nombre_pais: str
     cantidad_clientes: int
     clientes: List[ReporteClientesPorCiudadDetalle]
+
+
+class ReporteProductoDetalle(BaseModel):
+    id_producto: int
+    nombre_producto: str
+    descripcion: str
+    precio_compra: float
+    precio_venta: float
+    nombre_proveedor: str
+    telefono_proveedor: str
+    ciudad: str
+    provincia:str
+    pais:str
+
+    class Config:
+        from_attributes = True
+
+class ReporteProveedorResponse(BaseModel):
+    id_proveedor: int
+    nombre_proveedor: str
+    productos: List[ReporteProductoDetalle]
