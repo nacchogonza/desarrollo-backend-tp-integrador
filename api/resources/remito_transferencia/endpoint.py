@@ -11,11 +11,11 @@ from .schemas import RemitoTransferenciaCreateRequest, RemitoTransferenciaRespon
 
 from . import dal as remito_transferencia_dal
 
+from ..auth.dal import get_current_active_user
 
 router = APIRouter(
-    prefix="/remitos-transferencia",
-    tags=["Remitos Transferencia"],
     responses={404: {"description": "Remito de transferencia no encontrado"}},
+    dependencies=[Depends(get_current_active_user)],
 )
 
 @router.post("/", response_model=RemitoTransferenciaResponse, status_code=status.HTTP_201_CREATED)

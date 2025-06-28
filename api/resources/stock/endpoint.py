@@ -5,7 +5,11 @@ from .schemas import StockResponse, StockCreateRequest
 
 from .dal import obtener_stocks, crear_stock, delete_stock, reporte_stock_por_producto
 
-router = APIRouter()
+from ..auth.dal import get_current_active_user
+
+router = APIRouter(
+    dependencies=[Depends(get_current_active_user)],
+)
 
 
 async def get_db():

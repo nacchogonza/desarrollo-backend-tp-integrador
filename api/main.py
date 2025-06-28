@@ -12,6 +12,8 @@ from .resources.remito_transferencia import router as remito_transferencia_route
 from .resources.remito_venta import router as remito_venta_router
 from .resources.deposito import router as deposito_router
 from .resources.sucursal import router as sucursal_router
+from .resources.auth import auth_router
+from .resources.users import router as users_router
 
 from api.core.config import settings
 from api.core import models
@@ -39,15 +41,18 @@ async def startup_event():
  
 
 prefix_base = "/api/v1"
-app.include_router(api.resources.cliente.endpoint.router, prefix=f"{prefix_base}/cliente")
-app.include_router(api.resources.location.endpoint.router, prefix=f"{prefix_base}/location")
-app.include_router(api.resources.stock.endpoint.router, prefix=f"{prefix_base}/stock")
-app.include_router(api.resources.producto.endpoint.router, prefix=f"{prefix_base}/producto")
-app.include_router(api.resources.proveedor.endpoint.router, prefix=f"{prefix_base}/proveedor")
-app.include_router(remito_devolucion_router, prefix=f"{prefix_base}/remito_devolucion")
-app.include_router(remito_compra_router, prefix=f"{prefix_base}/remito_compra")
-app.include_router(remito_transferencia_router, prefix=f"{prefix_base}/remito_transferencia")
-app.include_router(remito_venta_router, prefix=f"{prefix_base}/remito_venta")
-app.include_router(deposito_router, prefix=f"{prefix_base}/deposito")
-app.include_router(sucursal_router, prefix=f"{prefix_base}/sucursal")
-app.include_router(reports_routes.router)
+
+app.include_router(auth_router, prefix=f"{prefix_base}/auth", tags=["Auth"])
+app.include_router(users_router, prefix=f"{prefix_base}/users", tags=["Users"])
+app.include_router(api.resources.cliente.endpoint.router, prefix=f"{prefix_base}/cliente", tags=["Cliente"])
+app.include_router(api.resources.location.endpoint.router, prefix=f"{prefix_base}/location", tags=["Location"])
+app.include_router(api.resources.stock.endpoint.router, prefix=f"{prefix_base}/stock", tags=["Stock"])
+app.include_router(api.resources.producto.endpoint.router, prefix=f"{prefix_base}/producto", tags=["Producto"])
+app.include_router(api.resources.proveedor.endpoint.router, prefix=f"{prefix_base}/proveedor", tags=["Proveedor"])
+app.include_router(deposito_router, prefix=f"{prefix_base}/deposito", tags=["Deposito"])
+app.include_router(sucursal_router, prefix=f"{prefix_base}/sucursal", tags=["Sucursal"])
+app.include_router(remito_devolucion_router, prefix=f"{prefix_base}/remito_devolucion", tags=["Remito Devolucion"])
+app.include_router(remito_compra_router, prefix=f"{prefix_base}/remito_compra", tags=["Remito Compra"])
+app.include_router(remito_transferencia_router, prefix=f"{prefix_base}/remito_transferencia", tags=["Remito Transferencia"])
+app.include_router(remito_venta_router, prefix=f"{prefix_base}/remito_venta", tags=["Remito Venta"])
+app.include_router(reports_routes.router, tags=["Reportes"])
