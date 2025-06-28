@@ -39,6 +39,7 @@ class ReporteClientesPorCiudadDetalle(BaseModel):
         from_attributes = True 
 
 class ReporteClientesPorCiudadResponse(BaseModel):
+    fecha_reporte: date
     id_ciudad: int
     nombre_ciudad: str
     nombre_provincia: str

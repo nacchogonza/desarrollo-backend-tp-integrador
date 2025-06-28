@@ -6,6 +6,7 @@ from typing import List, Dict, Any
 
 from ..core.models import RemitoVenta, Cliente, Ciudad, Provincia
 from .schemas import ReporteVentaDetalle, ReporteClientesPorCiudadDetalle
+from datetime import date
 
 async def get_ventas_by_period(
     db: AsyncSession,
@@ -81,6 +82,7 @@ async def get_clientes_by_city(
     
     clientes_por_ciudad = result.scalars().unique().all()
     
+    fecha_reporte = date.today()
     cantidad_clientes = 0
     nombre_ciudad = ""
     nombre_provincia = ""
@@ -105,6 +107,7 @@ async def get_clientes_by_city(
 
     
     return {
+        "fecha_reporte": fecha_reporte,
         "id_ciudad": id_ciudad,
         "nombre_ciudad": nombre_ciudad,
         "nombre_provincia": nombre_provincia,
