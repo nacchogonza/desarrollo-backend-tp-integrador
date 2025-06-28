@@ -1,8 +1,8 @@
-"""test carga db
+"""Carga Inicial DB
 
-Revision ID: 2d2acfe7ae80
+Revision ID: fb34d17d4009
 Revises: 
-Create Date: 2025-06-27 21:19:53.364187
+Create Date: 2025-06-28 01:17:03.463562
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '2d2acfe7ae80'
+revision: str = 'fb34d17d4009'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -27,20 +27,6 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_pais_id'), 'pais', ['id'], unique=False)
-    op.create_table('users',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('username', sa.String(), nullable=True),
-    sa.Column('email', sa.String(), nullable=True),
-    sa.Column('full_name', sa.String(), nullable=True),
-    sa.Column('hashed_password', sa.String(), nullable=True),
-    sa.Column('disabled', sa.Boolean(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
-    op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
-    op.create_index(op.f('ix_users_username'), 'users', ['username'], unique=True)
     op.create_table('provincia',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nombre', sa.String(), nullable=False),
@@ -210,10 +196,6 @@ def downgrade() -> None:
     op.drop_table('ciudad')
     op.drop_index(op.f('ix_provincia_id'), table_name='provincia')
     op.drop_table('provincia')
-    op.drop_index(op.f('ix_users_username'), table_name='users')
-    op.drop_index(op.f('ix_users_id'), table_name='users')
-    op.drop_index(op.f('ix_users_email'), table_name='users')
-    op.drop_table('users')
     op.drop_index(op.f('ix_pais_id'), table_name='pais')
     op.drop_table('pais')
     # ### end Alembic commands ###
