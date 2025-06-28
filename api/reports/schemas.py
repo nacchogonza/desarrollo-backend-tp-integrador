@@ -1,7 +1,7 @@
 
 from pydantic import BaseModel
 from datetime import date
-from typing import List, Optional
+from typing import List
 
 
 class ReporteVentasRequest(BaseModel):
@@ -28,3 +28,21 @@ class ReporteVentasResponse(BaseModel):
     total_ventas_periodo: float
     cantidad_items_vendidos: int
     detalles_ventas: List[ReporteVentaDetalle] 
+    
+    
+class ReporteClientesPorCiudadDetalle(BaseModel):
+    id_cliente: int
+    nombre: str
+    telefono: str
+
+    class Config:
+        from_attributes = True 
+
+class ReporteClientesPorCiudadResponse(BaseModel):
+    fecha_reporte: date
+    id_ciudad: int
+    nombre_ciudad: str
+    nombre_provincia: str
+    nombre_pais: str
+    cantidad_clientes: int
+    clientes: List[ReporteClientesPorCiudadDetalle]
