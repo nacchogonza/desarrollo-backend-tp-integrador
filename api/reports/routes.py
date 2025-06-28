@@ -58,8 +58,4 @@ async def get_ventas_report_endpoint(
 
     report_data = await reports_dal.get_clientes_by_city(db, id_ciudad)
 
-    if not report_data["clientes"]:
-
-        pass
-
     return ReporteClientesPorCiudadResponse(**report_data)
