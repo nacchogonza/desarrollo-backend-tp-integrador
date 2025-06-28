@@ -1,5 +1,6 @@
+from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, and_
+from sqlalchemy import select, and_
 from sqlalchemy.orm import selectinload
 from datetime import date
 from typing import List, Dict, Any
@@ -69,6 +70,23 @@ async def get_clientes_by_city(
     db: AsyncSession,
     id_ciudad: int
 ) -> Dict[str, Any]:
+    
+    # Validamos primero que la ciudad existe. Si no existe devolvemos una excepcion y no ejecutamos el flujo del reporte
+    ciudad = await db.execute(
+        select(Ciudad)
+        .where(Ciudad.id == id_ciudad)
+        .options(
+            selectinload(Ciudad.provincia)
+            .selectinload(Provincia.pais)
+        )
+    )
+    ciudad_obj = ciudad.scalars().first()
+
+    if not ciudad_obj:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"La ciudad con ID {id_ciudad} no fue encontrada en la Base de Datos."
+        )
     
     result = await db.execute(
         select(Cliente)
