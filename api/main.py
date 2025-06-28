@@ -16,8 +16,6 @@ from .resources.auth import auth_router
 from .resources.users import router as users_router
 
 from api.core.config import settings
-from api.core import models
-from api.core.database import engine, Base
 
 from .reports import routes as reports_routes
 
@@ -26,19 +24,6 @@ app = FastAPI(
     description="API para la gestion de stocks",
     version="0.0.1"
 )
-""""
-
-async def create_db_tables():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-@app.on_event("startup")
-async def startup_event():
-    print("Iniciando creación/verificación de tablas de base de datos...")
-    await create_db_tables()
-    print("Tablas de base de datos creadas (o verificadas) correctamente.")
-"""
- 
 
 prefix_base = "/api/v1"
 
@@ -55,4 +40,4 @@ app.include_router(remito_devolucion_router, prefix=f"{prefix_base}/remito_devol
 app.include_router(remito_compra_router, prefix=f"{prefix_base}/remito_compra", tags=["Remito Compra"])
 app.include_router(remito_transferencia_router, prefix=f"{prefix_base}/remito_transferencia", tags=["Remito Transferencia"])
 app.include_router(remito_venta_router, prefix=f"{prefix_base}/remito_venta", tags=["Remito Venta"])
-app.include_router(reports_routes.router, tags=["Reportes"])
+app.include_router(reports_routes.router, prefix=f"{prefix_base}/reports", tags=["Reportes"])

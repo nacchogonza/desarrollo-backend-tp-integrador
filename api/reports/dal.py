@@ -4,8 +4,8 @@ from sqlalchemy.orm import selectinload
 from datetime import date
 from typing import List, Dict, Any
 
-from ..core.models import RemitoVenta, Producto, Cliente, Sucursal 
-from .schemas import ReporteVentaDetalle
+from ..core.models import RemitoVenta, Cliente, Ciudad, Provincia
+from .schemas import ReporteVentaDetalle, ReporteClientesPorCiudadDetalle
 
 async def get_ventas_by_period(
     db: AsyncSession,
@@ -62,4 +62,53 @@ async def get_ventas_by_period(
         "total_ventas_periodo": total_ventas_periodo,
         "cantidad_items_vendidos": cantidad_items_vendidos,
         "detalles_ventas": detalles_ventas
+    }
+    
+async def get_clientes_by_city(
+    db: AsyncSession,
+    id_ciudad: int
+) -> Dict[str, Any]:
+    
+    result = await db.execute(
+        select(Cliente)
+        .where(Cliente.id_ciudad == id_ciudad)
+        .options(
+            selectinload(Cliente.ciudad)
+            .selectinload(Ciudad.provincia)
+            .selectinload(Provincia.pais)
+        )
+    )
+    
+    clientes_por_ciudad = result.scalars().unique().all()
+    
+    cantidad_clientes = 0
+    nombre_ciudad = ""
+    nombre_provincia = ""
+    nombre_pais = ""
+    clientes: List[ReporteClientesPorCiudadDetalle] = []
+
+    for cliente in clientes_por_ciudad:
+        
+        cantidad_clientes += 1
+        if (nombre_ciudad == "" and nombre_provincia == "" and nombre_pais == ""):
+            nombre_ciudad = cliente.ciudad.nombre
+            nombre_provincia = cliente.ciudad.provincia.nombre
+            nombre_pais = cliente.ciudad.provincia.pais.nombre
+        
+        clientes.append(
+            ReporteClientesPorCiudadDetalle(
+                id_cliente = cliente.id,
+                nombre = cliente.nombre,
+                telefono = cliente.telefono
+            )
+        )
+
+    
+    return {
+        "id_ciudad": id_ciudad,
+        "nombre_ciudad": nombre_ciudad,
+        "nombre_provincia": nombre_provincia,
+        "nombre_pais": nombre_pais,
+        "cantidad_clientes": cantidad_clientes,
+        "clientes": clientes
     }
