@@ -50,7 +50,7 @@ async def get_ventas_report_endpoint(
     db: AsyncSession = Depends(get_db),
 ):
 
-    if id == 0:
+    if id_ciudad == 0:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="El ID no puede ser 0",
