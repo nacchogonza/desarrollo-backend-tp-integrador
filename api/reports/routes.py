@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import date
 
 from ..core.database import get_db
-from .schemas import ReporteVentasResponse, ReporteClientesPorCiudadResponse
+from .schemas import ReporteVentasResponse, ReporteClientesPorCiudadResponse, ReporteProveedorResponse
 from . import dal as reports_dal
 from ..resources.auth.dal import get_current_active_user
 
@@ -59,3 +59,17 @@ async def get_ventas_report_endpoint(
     report_data = await reports_dal.get_clientes_by_city(db, id_ciudad)
 
     return ReporteClientesPorCiudadResponse(**report_data)
+
+
+@router.get("/productos_por_proveedor/{id_proveedor}", response_model=ReporteProveedorResponse)
+async def get_reporte_productos_por_proveedor(
+    id_proveedor: int,
+    db: AsyncSession = Depends(get_db),
+):
+    if id_proveedor == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="El ID del proveedor no puede ser 0."
+        )
+    reporte= await reports_dal.get_reporte_proveedor(db, id_proveedor)
+    return ReporteProveedorResponse(**reporte)
