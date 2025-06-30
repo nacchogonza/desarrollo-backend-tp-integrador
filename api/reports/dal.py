@@ -5,8 +5,8 @@ from sqlalchemy.orm import selectinload
 from datetime import date
 from typing import List, Dict, Any
 
-from ..core.models import RemitoVenta, Cliente, Ciudad, Provincia
-from .schemas import ReporteVentaDetalle, ReporteClientesPorCiudadDetalle
+from ..core.models import RemitoVenta, Cliente, Ciudad, Provincia, Pais, Producto, Proveedor
+from .schemas import ReporteVentaDetalle, ReporteClientesPorCiudadDetalle, ReporteProductoDetalle, ReporteProveedorResponse
 from datetime import date
 
 async def get_ventas_by_period(
@@ -132,4 +132,51 @@ async def get_clientes_by_city(
         "nombre_pais": nombre_pais,
         "cantidad_clientes": cantidad_clientes,
         "clientes": clientes
+    }
+
+async def get_reporte_proveedor(db: AsyncSession, id_proveedor: int) -> Dict[str, Any]:
+    stmt = (
+        select(Producto)
+        .where(Producto.id_proveedor == id_proveedor)
+        .options(
+            selectinload(Producto.proveedor)
+            .selectinload(Proveedor.ciudad)
+            .selectinload(Ciudad.provincia)
+            .selectinload(Provincia.pais)
+        )
+    )
+
+    result = await db.execute(stmt)
+    productos = result.scalars().unique().all()
+
+    if not productos:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail= f"No se encontraron producto para el proveedor con ID {id_proveedor}"
+        )
+    
+    proveedor = productos[0].proveedor #Todos los productos pertenecen al mismo proveedor
+
+    productos_detalle = []
+    for producto in productos:
+        productos_detalle.append(
+            ReporteProductoDetalle(
+                id_producto=producto.id,
+                nombre_producto=producto.nombre,
+                descripcion=producto.descripcion,
+                categoria=producto.categoria,
+                precio_compra=producto.precioCompra,
+                precio_venta=producto.precioVenta,
+                nombre_proveedor=proveedor.nombre,
+                telefono_proveedor=proveedor.telefono,
+                ciudad=proveedor.ciudad.nombre,
+                provincia=proveedor.ciudad.provincia.nombre,
+                pais=proveedor.ciudad.provincia.pais.nombre
+            )
+        )
+
+    return{
+        "id_proveedor": proveedor.id,
+        "nombre_proveedor": proveedor.nombre,
+        "productos": productos_detalle
     }
