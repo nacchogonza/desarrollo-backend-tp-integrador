@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 import api.resources.cliente.endpoint
 import api.resources.location.endpoint
@@ -23,6 +24,24 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     description="API para la gestion de stocks",
     version="0.0.1"
+)
+
+origins = [
+    # 💡 Origen de Desarrollo: Reemplaza 5173 por el puerto de tu React App si es diferente
+    "http://localhost:5173", 
+    "http://127.0.0.1:5173", 
+    "http://localhost:5174", 
+    "http://127.0.0.1:5174", 
+    # 💡 Origen de Producción: DEBES AÑADIR el dominio de tu frontend aquí cuando lo subas
+    # "https://tu-dominio-del-frontend.com", 
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,              # Permite los orígenes definidos en la lista 'origins'
+    allow_credentials=True,             # Necesario para cookies o headers de autorización
+    allow_methods=["*"],                # Permite todos los métodos (GET, POST, etc.)
+    allow_headers=["*"],                # Permite todos los headers
 )
 
 prefix_base = "/api/v1"
