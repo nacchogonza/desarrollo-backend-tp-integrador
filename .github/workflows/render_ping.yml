@@ -1,0 +1,19 @@
+name: "Render Keep Alive Ping"
+
+# Define que este workflow se ejecute según un cron job
+on:
+  schedule:
+    # 💡 La sintaxis cron: '*/10 * * * *' significa:
+    # 'Cada 10 minutos, a cualquier hora, cualquier día del mes, cualquier mes, cualquier día de la semana.'
+    - cron: '*/10 * * * *' 
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hacer Ping al Endpoint de Render
+        # Comando simple 'curl' para hacer una solicitud GET al endpoint.
+        # El comando '-s' silencia la salida, y '--head' pide solo los headers (es más rápido y ligero).
+        run: |
+          # 🔥 REEMPLAZA esta URL por la URL base de tu servicio en Render.
+          curl -s --head "https://stocky-backend-crqm.onrender.com/"
