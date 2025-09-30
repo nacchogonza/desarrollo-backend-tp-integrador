@@ -31,7 +31,8 @@ origins = [
     "http://localhost:5173", 
     "http://127.0.0.1:5173", 
     "http://localhost:5174", 
-    "http://127.0.0.1:5174", 
+    "http://127.0.0.1:5174",
+    "https://stocky-frontend.vercel.app/" 
     # 💡 Origen de Producción: DEBES AÑADIR el dominio de tu frontend aquí cuando lo subas
     # "https://tu-dominio-del-frontend.com", 
 ]
