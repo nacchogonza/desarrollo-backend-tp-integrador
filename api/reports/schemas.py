@@ -1,7 +1,7 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import date
-from typing import List
+from typing import List, Optional
 
 
 class ReporteVentasRequest(BaseModel):
@@ -67,3 +67,30 @@ class ReporteProveedorResponse(BaseModel):
     id_proveedor: int
     nombre_proveedor: str
     productos: List[ReporteProductoDetalle]
+    
+    
+class ReporteStockDetalle(BaseModel):
+    cantidad_en_sucursal: int
+    cantidad_en_deposito: int
+    
+    nombre_sucursal: str
+    nombre_deposito: Optional[str] = None
+
+    model_config = ConfigDict(from_attributes=True)
+    
+    
+class ReporteStockResumen(BaseModel):
+    fecha_generacion: date 
+    
+    id_producto: int
+    nombre_producto: str
+    sku_producto: Optional[str] = None
+
+    total_unidades_en_stock: int
+    
+    detalles_por_ubicacion: List[ReporteStockDetalle] 
+
+    model_config = ConfigDict(from_attributes=True)
+    
+    
+    

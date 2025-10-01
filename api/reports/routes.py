@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import date
 
 from ..core.database import get_db
-from .schemas import ReporteVentasResponse, ReporteClientesPorCiudadResponse, ReporteProveedorResponse
+from .schemas import ReporteVentasResponse, ReporteClientesPorCiudadResponse, ReporteProveedorResponse, ReporteStockResumen
 from . import dal as reports_dal
 from ..resources.auth.dal import get_current_active_user
 
@@ -73,3 +73,25 @@ async def get_reporte_productos_por_proveedor(
         )
     reporte= await reports_dal.get_reporte_proveedor(db, id_proveedor)
     return ReporteProveedorResponse(**reporte)
+
+
+@router.get(
+    "/reportes/producto/{id_producto}",  
+    response_model=ReporteStockResumen,  
+    summary="Obtener reporte de stock por ID de producto (cantidad y ubicación)",
+    response_description="Reporte detallado del stock disponible para un producto dado, agrupado por ubicación en sucursales y depósitos.",
+)
+async def get_stock_report_by_product(
+    id_producto: int,
+    db: AsyncSession = Depends(get_db),  # <--- Usar database.get_db_session
+):
+    """
+    Genera un reporte completo del stock de un producto específico, incluyendo la cantidad total
+    y el desglose por cantidades en sucursales y depósitos.
+    Requiere autenticación (ya cubierta por la dependencia del router).
+    """
+    reporte_data_dict = await reports_dal.reporte_stock_por_producto(db, id_producto)
+
+    return ReporteStockResumen(**reporte_data_dict)
+
+

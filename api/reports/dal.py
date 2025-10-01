@@ -5,8 +5,8 @@ from sqlalchemy.orm import selectinload
 from datetime import date
 from typing import List, Dict, Any
 
-from ..core.models import RemitoVenta, Cliente, Ciudad, Provincia, Pais, Producto, Proveedor
-from .schemas import ReporteVentaDetalle, ReporteClientesPorCiudadDetalle, ReporteProductoDetalle, ReporteProveedorResponse
+from ..core.models import RemitoVenta, Cliente, Ciudad, Provincia, Sucursal, Producto, Proveedor, Stock, Deposito
+from .schemas import ReporteVentaDetalle, ReporteClientesPorCiudadDetalle, ReporteProductoDetalle, ReporteStockDetalle
 from datetime import date
 
 async def get_ventas_by_period(
@@ -180,3 +180,73 @@ async def get_reporte_proveedor(db: AsyncSession, id_proveedor: int) -> Dict[str
         "nombre_proveedor": proveedor.nombre,
         "productos": productos_detalle
     }
+
+
+async def reporte_stock_por_producto(
+    db: AsyncSession, 
+    id_producto: int
+) -> Dict[str, Any]:
+    
+    producto_result = await db.execute(
+        select(Producto).where(Producto.id == id_producto)
+    )
+    producto_obj = producto_result.scalars().first()
+
+    if not producto_obj:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Producto con ID {id_producto} no encontrado."
+        )
+
+    result = await db.execute(
+        select(Stock)
+        .options(
+            selectinload(Stock.producto) 
+            .selectinload(Producto.proveedor) 
+            .selectinload(Proveedor.ciudad)   
+            .selectinload(Ciudad.provincia)   
+            .selectinload(Provincia.pais),   
+            selectinload(Stock.deposito)
+            .selectinload(Deposito.ciudad)
+            .selectinload(Ciudad.provincia)
+            .selectinload(Provincia.pais),
+            selectinload(Stock.sucursal)
+            .selectinload(Sucursal.ciudad)
+            .selectinload(Ciudad.provincia)
+            .selectinload(Provincia.pais)
+        )
+        .where(Stock.id_producto == id_producto)
+        .order_by(Stock.id_sucursal.asc(), Stock.id_deposito.asc()) 
+    )
+    
+    items_stock = result.scalars().unique().all() 
+
+    
+    total_unidades_en_stock = 0
+    detalles_por_ubicacion: List[ReporteStockDetalle] = []
+
+    for item in items_stock:
+        total_unidades_en_stock += item.cantidad_sucursal
+        total_unidades_en_stock += item.cantidad_deposito
+
+        detalles_por_ubicacion.append(
+            ReporteStockDetalle(
+                cantidad_en_sucursal=item.cantidad_sucursal,
+                cantidad_en_deposito=item.cantidad_deposito,
+                nombre_sucursal=item.sucursal.nombre if item.sucursal else "N/A",
+                nombre_deposito=item.deposito.nombre if item.deposito else "N/A"
+            )
+        )
+
+    # 4. Construir y retornar el diccionario que representa el ReporteStockResumen
+    return {
+        "fecha_generacion": date.today(),
+        "id_producto": producto_obj.id,
+        "nombre_producto": producto_obj.nombre,
+        "sku_producto": producto_obj.sku if hasattr(producto_obj, 'sku') else None,
+        "total_unidades_en_stock": total_unidades_en_stock,
+        "detalles_por_ubicacion": detalles_por_ubicacion
+    }
+
+
+
