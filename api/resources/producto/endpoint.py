@@ -22,8 +22,3 @@ async def listar(db: AsyncSession = Depends(get_db)):
 @router.post("/", response_model= ProductoResponse)
 async def crear_producto(producto: ProductoCreateRequest, db: AsyncSession = Depends(get_db)):
     return await dal.crear_producto(db, producto)
-
-#Reporte Proveedores
-@router.get("/reporte/{id_proveedor}", response_model=list[ProductoResponse])
-async def get_reporte_proveedores(id_proveedor: int, db: AsyncSession = Depends(get_db)):
-    return await dal.reporte_proveedores(db, id_proveedor)

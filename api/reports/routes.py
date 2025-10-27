@@ -76,7 +76,7 @@ async def get_reporte_productos_por_proveedor(
 
 
 @router.get(
-    "/reportes/producto/{id_producto}",  
+    "/stock_por_producto/{id_producto}",  
     response_model=ReporteStockResumen,  
     summary="Obtener reporte de stock por ID de producto (cantidad y ubicación)",
     response_description="Reporte detallado del stock disponible para un producto dado, agrupado por ubicación en sucursales y depósitos.",
