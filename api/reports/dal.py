@@ -150,10 +150,11 @@ async def get_reporte_proveedor(db: AsyncSession, id_proveedor: int) -> Dict[str
     productos = result.scalars().unique().all()
 
     if not productos:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail= f"No se encontraron producto para el proveedor con ID {id_proveedor}"
-        )
+        return{
+            "id_proveedor": id_proveedor,
+            "nombre_proveedor": "-",
+            "productos": []
+        }
     
     proveedor = productos[0].proveedor #Todos los productos pertenecen al mismo proveedor
 
